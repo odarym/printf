@@ -1,2 +1,2 @@
 # printf
-An implementation of the c printf function
+A custom implementation of the c printf function
