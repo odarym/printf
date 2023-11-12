@@ -14,7 +14,7 @@ int _puts(char *string)
 
 	if (!string)
 		return (-1);
-	
+
 	length = strlen(string);
 	write(1, string, length);
 	return (length);
