@@ -183,6 +183,7 @@ uint8_t PrintfNum(int argument, uint8_t lengthState, bool sign, uint8_t base)
 			if (sign)
 			{
 				int n = argument;
+
 				if (n < 0)
 				{
 					n = -n;
@@ -199,6 +200,7 @@ uint8_t PrintfNum(int argument, uint8_t lengthState, bool sign, uint8_t base)
 			if (sign)
 			{
 				long int n = argument;
+
 				if (n < 0)
 				{
 					n = -n;
@@ -215,6 +217,7 @@ uint8_t PrintfNum(int argument, uint8_t lengthState, bool sign, uint8_t base)
 			if (sign)
 			{
 				int64_t n = argument;
+
 				if (n < 0)
 				{
 					n = -n;
