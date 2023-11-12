@@ -1,5 +1,22 @@
 #include "main.h"
 
+
+#define PRINTF_STATE_NORMAL 0
+#define PRINTF_STATE_LENGTH 1
+#define PRINTF_STATE_LENGTH_SHORT 2
+#define PRINTF_STATE_LENGTH_LONG 3
+#define PRINTF_STATE_SPEC 4
+
+#define PRINTF_LENGTH_DEFAULT 0
+#define PRINTF_LENGTH_SHORT_SHORT 1
+#define PRINTF_LENGTH_SHORT	2
+#define PRINTF_LENGTH_LONG	3
+#define PRINTF_LENGTH_LONG_LONG	4
+
+
+uint8_t PrintfNum(int argument, uint8_t lengthState, bool sign, uint8_t base);
+
+
 /**
  * _printf - Print a formatted string
  *
@@ -8,28 +25,11 @@
  * Return: the number of characters printed
  *  (excluding the null byte used to end output to strings)
 */
-
-#define PRINTF_STATE_NORMAL			0
-#define PRINTF_STATE_LENGTH			1
-#define PRINTF_STATE_LENGTH_SHORT 	2
-#define PRINTF_STATE_LENGTH_LONG 	3
-#define PRINTF_STATE_SPEC			4
-
-#define PRINTF_LENGTH_DEFAULT		0
-#define PRINTF_LENGTH_SHORT_SHORT	1
-#define PRINTF_LENGTH_SHORT			2
-#define PRINTF_LENGTH_LONG			3
-#define PRINTF_LENGTH_LONG_LONG		4
-
-
-uint8_t PrintfNum(int argument, uint8_t lengthState, bool sign, uint8_t base);
-
-
 int _printf(const char *format, ...)
 {
 	uint16_t i = 0;
 	uint16_t count = 0;
-	
+
 	va_list args;
 	uint8_t state = PRINTF_STATE_NORMAL;
 	uint8_t lengthState = PRINTF_LENGTH_DEFAULT;
@@ -50,10 +50,12 @@ int _printf(const char *format, ...)
 			case PRINTF_STATE_NORMAL:
 				switch (format[i])
 				{
-					case '%': state = PRINTF_STATE_LENGTH;
+					case '%':
+						state = PRINTF_STATE_LENGTH;
 						break;
-					default: _putchar(format[i]);
-							 count++;
+					default:
+						_putchar(format[i]);
+						count++;
 						break;
 				}
 				break;
@@ -61,12 +63,15 @@ int _printf(const char *format, ...)
 			case PRINTF_STATE_LENGTH:
 				switch (format[i])
 				{
-					case 'h': lengthState = PRINTF_LENGTH_SHORT;
+					case 'h':
+						lengthState = PRINTF_LENGTH_SHORT;
 						state = PRINTF_STATE_LENGTH_SHORT;
 						break;
-					case 'l': lengthState =  PRINTF_LENGTH_LONG;
+					case 'l':
+						lengthState =  PRINTF_LENGTH_LONG;
 						break;
-					default: goto PRINTF_STATE_SPEC_;
+					default:
+						goto PRINTF_STATE_SPEC_;
 				}
 				break;
 
@@ -76,48 +81,64 @@ int _printf(const char *format, ...)
 					lengthState = PRINTF_LENGTH_SHORT_SHORT;
 					state = PRINTF_STATE_SPEC;
 				}
-				else goto PRINTF_STATE_SPEC_;
+				else
+					goto PRINTF_STATE_SPEC_;
+
 					break;
 			case PRINTF_STATE_LENGTH_LONG:
-                if (format[i] == 'l')
-                {
-                    lengthState = PRINTF_LENGTH_LONG_LONG;
-                    state = PRINTF_STATE_SPEC;
-                }
-                else goto PRINTF_STATE_SPEC_;
-                    break;
-			case PRINTF_STATE_SPEC:
-			PRINTF_STATE_SPEC_:
-				switch(format[i])
+				if (format[i] == 'l')
 				{
-					case 'c':	_putchar(*(va_arg(args, char *)));
-								count++;
-							break;
-					case 's':	count += _puts(va_arg(args, char*));
-							break;
-					case '%':	_putchar('%');
-								count++;
-							break;
+					lengthState = PRINTF_LENGTH_LONG_LONG;
+					state = PRINTF_STATE_SPEC;
+				}
+				else
+					goto PRINTF_STATE_SPEC_;
+
+					break;
+			case PRINTF_STATE_SPEC:
+PRINTF_STATE_SPEC_:
+				switch (format[i])
+				{
+					case 'c':
+						_putchar((va_arg(args, char *)));
+						count++;
+						break;
+					case 's':
+						count += _puts(va_arg(args, char*));
+						break;
+					case '%':
+						_putchar('%');
+						count++;
+						break;
 					case 'd':
-					case 'i':	base = 10; sign = true;
-								count += PrintfNum(va_arg(args, int), lengthState, sign, base);
-							break;
-					case 'u':	base = 10; sign = false;
-								count += PrintfNum(va_arg(args, int), lengthState, sign, base);
-							break;
+					case 'i':
+						base = 10;
+						sign = true;
+						count += PrintfNum(va_arg(args, int), lengthState, sign, base);
+						break;
+					case 'u':
+						base = 10;
+						sign = false;
+						count += PrintfNum(va_arg(args, int), lengthState, sign, base);
+						break;
 					case 'X':
-                    case 'x':   
-					case 'p':	base = 16; sign = false;
-								count += PrintfNum(va_arg(args, int), lengthState, sign, base);
-							break;
-					case 'o':	base = 8; sign = false;
-                                count += PrintfNum(va_arg(args, int), lengthState, sign, base);
-							break;
+					case 'x':
+					case 'p':
+						base = 16;
+						sign = false;
+						count += PrintfNum(va_arg(args, int), lengthState, sign, base);
+						break;
+					case 'o':
+						base = 8;
+						sign = false;
+						count += PrintfNum(va_arg(args, int), lengthState, sign, base);
+						break;
 
 					/*Ignore invalid specifier characters for now*/
-					default:	break;
+					default:
+						break;
 				}
-				
+
 				/*Reset state to NORMAL*/
 				state = PRINTF_STATE_NORMAL;
 				lengthState = PRINTF_LENGTH_DEFAULT;
@@ -131,6 +152,16 @@ int _printf(const char *format, ...)
 	return (count);
 }
 
+/**
+ * PrintfNum - Assist printf in formatting numbers before printing
+ *
+ * @argument: The number to format
+ * @lengthState: The state to format to
+ * @sign: The number sign
+ * @base: The number base
+ *
+ * Return: the number of characters in the value
+*/
 uint8_t PrintfNum(int argument, uint8_t lengthState, bool sign, uint8_t base)
 {
 	char buffer[32] = { 0 };
@@ -139,7 +170,7 @@ uint8_t PrintfNum(int argument, uint8_t lengthState, bool sign, uint8_t base)
 	int8_t i = 0;
 	uint8_t count = 0;
 	const char hexChars[] = {"0123456789abcdef"};
-	
+
 	switch (lengthState)
 	{
 		case PRINTF_LENGTH_SHORT_SHORT:
@@ -147,58 +178,63 @@ uint8_t PrintfNum(int argument, uint8_t lengthState, bool sign, uint8_t base)
 		case PRINTF_LENGTH_DEFAULT:
 			if (sign)
 			{
-				if (argument < 0)
+				int n = argument;
+				if (n < 0)
 				{
-					argument = -argument;
+					n = -n;
 					numSign = -1;
 				}
-				number = (uint64_t)argument;
+				number = (int)n;
 			}
 			else
 			{
-				number = (uint64_t)argument;
+				number = (unsigned int)argument;
 			}
 			break;
 		case PRINTF_LENGTH_LONG:
 			if (sign)
-            {
-                if (argument < 0)
-                {
-                    argument = -argument;
-                    numSign = -1;
-                }
-                number = (uint64_t)argument;
-            }
-            else
-            {
-                number = (uint64_t)argument;
-            }
+			{
+				long int n = argument;
+				if (n < 0)
+				{
+					n = -n;
+					numSign = -1;
+				}
+				number = (unsigned long long)n;
+			}
+			else
+			{
+				number = (unsigned long int)argument;
+			}
 			break;
 		case PRINTF_LENGTH_LONG_LONG:
 			if (sign)
-            {
-                if (argument < 0)
-                {
-                    argument = -argument;
-                    numSign = -1;
-                }
-                number = (uint64_t)argument;
-            }
-            else
-            {
-                number = (uint64_t)argument;
-            }
-            break;
+			{
+				long long int n = argument;
+				if (n < 0)
+				{
+					n = -n;
+					numSign = -1;
+				}
+				number = (unsigned long long)n;
+			}
+			else
+			{
+				number = (unsigned long long)argument;
+			}
+			break;
 	}
 
 	/*Convert number to string*/
 	do {
 		uint32_t rem = number % base;
+
+		number /= base;
 		buffer[i++] = hexChars[rem];
 	} while (number > 0);
 
 	/*Place sign*/
-	if (sign && !numSign)
+	if (sign && numSign < 0)
 	{
 		buffer[i++] = '-';
 	}
@@ -208,7 +244,7 @@ uint8_t PrintfNum(int argument, uint8_t lengthState, bool sign, uint8_t base)
 		_putchar(buffer[i]);
 		count++;
 	}
-	
-	return count;
+
+	return (count);
 }
 
