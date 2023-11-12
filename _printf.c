@@ -133,7 +133,8 @@ PRINTF_STATE_SPEC_:
 						count += _puts("0x");
 						base = 16;
 						sign = false;
-						count += PrintfNum(va_arg(args, uint64_t), PRINTF_LENGTH_LONG_LONG, sign, base);
+						lengthState = PRINTF_LENGTH_LONG_LONG;
+						count += PrintfNum(va_arg(args, uint64_t), lengthState, sign, base);
 						break;
 					case 'o':
 						base = 8;
