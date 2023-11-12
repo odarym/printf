@@ -14,7 +14,7 @@
 #define PRINTF_LENGTH_LONG_LONG	4
 
 
-uint8_t PrintfNum(int argument, uint8_t lengthState, bool sign, uint8_t base);
+uint8_t PrintfNum(uint64_t argument, uint8_t lengthState, bool sign, uint8_t base);
 
 
 /**
@@ -125,10 +125,15 @@ PRINTF_STATE_SPEC_:
 						break;
 					case 'X':
 					case 'x':
-					case 'p':
 						base = 16;
 						sign = false;
 						count += PrintfNum(va_arg(args, int), lengthState, sign, base);
+						break;
+					case 'p':
+						count += _puts("0x");
+						base = 16;
+						sign = false;
+						count += PrintfNum(va_arg(args, uint64_t), PRINTF_LENGTH_LONG_LONG, sign, base);
 						break;
 					case 'o':
 						base = 8;
@@ -167,7 +172,7 @@ PRINTF_STATE_SPEC_:
  *
  * Return: the number of characters in the value
 */
-uint8_t PrintfNum(int argument, uint8_t lengthState, bool sign, uint8_t base)
+uint8_t PrintfNum(uint64_t argument, uint8_t lengthState, bool sign, uint8_t base)
 {
 	char buffer[32] = { 0 };
 	uint64_t number = 0;
