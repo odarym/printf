@@ -138,8 +138,9 @@ PRINTF_STATE_SPEC_:
 
 					/*Ignore invalid specifier characters for now*/
 					default:
-						_putchar('%');
+						_putchar(format[i - 1]);
 						_putchar(format[i]);
+						count += 2;
 						break;
 				}
 
