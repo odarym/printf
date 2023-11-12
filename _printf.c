@@ -82,9 +82,10 @@ int _printf(const char *format, ...)
 					state = PRINTF_STATE_SPEC;
 				}
 				else
+				{
 					goto PRINTF_STATE_SPEC_;
-
-					break;
+				}
+				break;
 			case PRINTF_STATE_LENGTH_LONG:
 				if (format[i] == 'l')
 				{
@@ -92,15 +93,16 @@ int _printf(const char *format, ...)
 					state = PRINTF_STATE_SPEC;
 				}
 				else
+				{
 					goto PRINTF_STATE_SPEC_;
-
-					break;
+				}
+				break;
 			case PRINTF_STATE_SPEC:
 PRINTF_STATE_SPEC_:
 				switch (format[i])
 				{
 					case 'c':
-						_putchar((va_arg(args, char *)));
+						_putchar((va_arg(args, int)));
 						count++;
 						break;
 					case 's':
@@ -136,6 +138,8 @@ PRINTF_STATE_SPEC_:
 
 					/*Ignore invalid specifier characters for now*/
 					default:
+						_putchar('%');
+						_putchar(format[i]);
 						break;
 				}
 
@@ -200,7 +204,7 @@ uint8_t PrintfNum(int argument, uint8_t lengthState, bool sign, uint8_t base)
 					n = -n;
 					numSign = -1;
 				}
-				number = (unsigned long long)n;
+				number = (uint64_t)n;
 			}
 			else
 			{
@@ -210,17 +214,17 @@ uint8_t PrintfNum(int argument, uint8_t lengthState, bool sign, uint8_t base)
 		case PRINTF_LENGTH_LONG_LONG:
 			if (sign)
 			{
-				long long int n = argument;
+				int64_t n = argument;
 				if (n < 0)
 				{
 					n = -n;
 					numSign = -1;
 				}
-				number = (unsigned long long)n;
+				number = (uint64_t)n;
 			}
 			else
 			{
-				number = (unsigned long long)argument;
+				number = (uint64_t)argument;
 			}
 			break;
 	}
