@@ -12,7 +12,7 @@ HEADER_FILES := $(wildcard $(SRC_DIR)/*.h)
 
 # Specify the compiler and flags
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -pedantic -std=gnu89
+CFLAGS = -Wall -Wextra -Werror -pedantic -std=gnu89 -Wno-format
 #GTKFLAGS = `pkg-config --cflags --libs gtk+-3.0`
 
 # Generate the object files by replacing the .c extension with .o
