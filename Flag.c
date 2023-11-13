@@ -1,19 +1,19 @@
 #include <stdio.h>
 
-int flagSpace(int numberSin, int numberDouble)
+int flagSpace(int numSin, int numDouble)
 
 {
     int numberSin = 0;
     {
-      putchar("%2d/n", numberSin );
-      putchar("%-2d/n", numberSin );
-      putchar("% d/n", numberSin );  
+      putchar("%2d/n", numSin );
+      putchar("%-2d/n", numSin );
+      putchar("% d/n", numSin );  
 
     }
 
-    int numberDouble = 456;
+    int numDouble = 456;
     {
-        putchar("%#g/n", numberDouble);
+        putchar("%#g/n", numDouble );
     }
     return (0);
 }
