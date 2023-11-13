@@ -1,3 +1,6 @@
+#WIN
+# gcc -Wall -Wextra -Werror -pedantic -std=gnu89 -Wno-format -g3  *.c -o printf.out.exe
+
 # Makefile
 
 # Specify the name of the binary file to generate
