@@ -20,3 +20,18 @@ int Puts(char *string)
 
 	return (length);
 }
+
+
+int PutsCustom(char *string)
+{
+	int length = 0;
+
+	if (!string)
+		return (0);
+
+	length = strlen(string);
+	write(1, string, length);
+
+	return (length);
+}
+

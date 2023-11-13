@@ -13,6 +13,8 @@
 #define PRINTF_LENGTH_LONG	3
 #define PRINTF_LENGTH_LONG_LONG	4
 
+#define PRINTF_STATE_FLAGS 5
+
 
 uint8_t PrintfNum(uint64_t arg, uint8_t lenState, bool sign, uint8_t base, bool hexUpper);
 
@@ -53,6 +55,8 @@ int _printf(const char *format, ...)
 				{
 					case '%':
 						state = PRINTF_STATE_LENGTH;
+						if (format[i + 1] == '+' || (format[i + 1] == '-') )
+							state = PRINTF_STATE_FLAGS;
 						break;
 					default:
 						Putchar(format[i]);
@@ -98,6 +102,28 @@ int _printf(const char *format, ...)
 					goto PRINTF_STATE_SPEC_;
 				}
 				break;
+
+			/*Flags state spec*/
+			case PRINTF_STATE_FLAGS:
+				if (format[i] == '+')
+				{
+					;/*Handle + flag*/
+				}
+				if (format[i] == '-')
+				{
+					;/*Handle - flag*/
+				}
+				if (format[i] == ' ')
+				{
+					;/*Handle space flag*/
+				}
+				if (format[i] == '#')
+				{
+					;/*Handle # flag*/
+				}
+				break;
+			/*Flags state spec*/
+			
 			case PRINTF_STATE_SPEC:
 PRINTF_STATE_SPEC_:
 				switch (format[i])
@@ -110,7 +136,7 @@ PRINTF_STATE_SPEC_:
 						count += Puts(va_arg(args, char*));
 						break;
 					case 'S':
-						PutCustomS(va_arg(args, char *));
+						PutsCustom(va_arg(args, char *));
 						break;
 					case '%':
 						Putchar('%');
