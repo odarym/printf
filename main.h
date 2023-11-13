@@ -25,6 +25,8 @@ void Putchar(char ch);
 int Puts(char *string);
 int _printf(const char *format, ...);
 int DecimalToBinary(int decimalNum);
+int PutsCustom(char *string);
+
 
 
 
