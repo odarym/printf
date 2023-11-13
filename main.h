@@ -21,9 +21,11 @@
 #include <unistd.h>
 
 
-void _putchar(char ch);
-int _puts(char *string);
+void Putchar(char ch);
+int Puts(char *string);
 int _printf(const char *format, ...);
+int DecimalToBinary(int decimalNum);
+
 
 
 #endif

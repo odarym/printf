@@ -14,7 +14,7 @@
 #define PRINTF_LENGTH_LONG_LONG	4
 
 
-uint8_t PrintfNum(uint64_t arg, uint8_t lenState, bool sign, uint8_t base);
+uint8_t PrintfNum(uint64_t arg, uint8_t lenState, bool sign, uint8_t base, bool hexUpper);
 
 
 /**
@@ -28,12 +28,13 @@ uint8_t PrintfNum(uint64_t arg, uint8_t lenState, bool sign, uint8_t base);
 int _printf(const char *format, ...)
 {
 	uint16_t i = 0;
-	uint16_t count = 0;
+	int count = 0;
 
 	va_list args;
 	uint8_t state = PRINTF_STATE_NORMAL;
 	uint8_t lenState = PRINTF_LENGTH_DEFAULT;
 	uint8_t base = 10;
+	bool hexUpper = false;
 	bool sign = false;
 
 
@@ -54,7 +55,7 @@ int _printf(const char *format, ...)
 						state = PRINTF_STATE_LENGTH;
 						break;
 					default:
-						_putchar(format[i]);
+						Putchar(format[i]);
 						count++;
 						break;
 				}
@@ -102,55 +103,67 @@ PRINTF_STATE_SPEC_:
 				switch (format[i])
 				{
 					case 'c':
-						_putchar((va_arg(args, int)));
+						Putchar((va_arg(args, int)));
 						count++;
 						break;
 					case 's':
-						count += _puts(va_arg(args, char*));
+						count += Puts(va_arg(args, char*));
+						break;
+					case 'S':
+						PutCustomS(va_arg(args, char *));
 						break;
 					case '%':
-						_putchar('%');
+						Putchar('%');
 						count++;
+						break;
+					case 'b':
+						count += DecimalToBinary(va_arg(args, int));
 						break;
 					case 'd':
 					case 'i':
 						base = 10;
 						sign = true;
-						count += PrintfNum(va_arg(args, int), lenState, sign, base);
+						count += PrintfNum(va_arg(args, int), lenState, sign, base, hexUpper);
 						break;
 					case 'u':
 						base = 10;
 						sign = false;
-						count += PrintfNum(va_arg(args, int), lenState, sign, base);
+						count += PrintfNum(va_arg(args, int), lenState, sign, base, hexUpper);
 						break;
-					case 'X':
 					case 'x':
 						base = 16;
 						sign = false;
-						count += PrintfNum(va_arg(args, int), lenState, sign, base);
+						count += PrintfNum(va_arg(args, int), lenState, sign, base, hexUpper);
+						break;
+					case 'X':
+					/*Print hex chars in uppercase*/
+						base = 16;
+						sign = false;
+						count += PrintfNum(va_arg(args, int), lenState, sign, base, hexUpper);
 						break;
 					case 'p':
-						count += _puts("0x");
+						count += Puts("0x");
 						base = 16;
 						sign = false;
 						lenState = PRINTF_LENGTH_LONG_LONG;
-						count += PrintfNum(va_arg(args, uint64_t), lenState, sign, base);
+						count += PrintfNum(va_arg(args, uint64_t), lenState, sign, base, hexUpper);
 						break;
 					case 'o':
 						base = 8;
 						sign = false;
-						count += PrintfNum(va_arg(args, int), lenState, sign, base);
+						count += PrintfNum(va_arg(args, int), lenState, sign, base, hexUpper);
 						break;
 
 					/*Ignore invalid specifier characters for now*/
 					default:
-						_putchar(format[i - 1]);
-						_putchar(format[i]);
+						Putchar(format[i - 1]);
+						Putchar(format[i]);
 						count += 2;
 						break;
 				}
 
 				/*Reset state to NORMAL*/
+				#undef PRINTF_HEX_UPPER
 				state = PRINTF_STATE_NORMAL;
 				lenState = PRINTF_LENGTH_DEFAULT;
 				base = 10;
@@ -173,14 +186,14 @@ PRINTF_STATE_SPEC_:
  *
  * Return: the number of characters in the value
 */
-uint8_t PrintfNum(uint64_t arg, uint8_t lenState, bool sign, uint8_t base)
+uint8_t PrintfNum(uint64_t arg, uint8_t lenState, bool sign, uint8_t base, bool hexUpper)
 {
 	char buffer[32] = { 0 };
 	uint64_t number = 0;
 	int8_t numSign = 1;
-	int8_t i = 0;
+	int8_t i = 0, j = 0;
 	uint8_t count = 0;
-	const char hexChars[] = {"0123456789abcdef"};
+	char hexChars[] = {"0123456789abcdef"};
 
 	switch (lenState)
 	{
@@ -239,7 +252,13 @@ uint8_t PrintfNum(uint64_t arg, uint8_t lenState, bool sign, uint8_t base)
 			break;
 	}
 
-	/*Convert number to string*/
+	/*Convert number to string - Upper case for hex*/
+	if (hexUpper)
+		for (j = 10; j < 16; j++)
+			hexChars[j] += ' ';
+			
+
+	/*Convert number to string- Lower case for hex*/
 	do {
 		uint32_t rem = number % base;
 
@@ -255,7 +274,7 @@ uint8_t PrintfNum(uint64_t arg, uint8_t lenState, bool sign, uint8_t base)
 
 	while (--i > -1)
 	{
-		_putchar(buffer[i]);
+		Putchar(buffer[i]);
 		count++;
 	}
 
