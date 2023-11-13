@@ -3,8 +3,8 @@
 int flagSpace(int number)
 
 {
-    int a = 1234;
-    double b = 1234.0;
+    int a = 0;
+    double b = 0.5;
 
     putchar("%+2d/n %-2d/n % 2d/n", a );
     putchar("%#g/n", b );
