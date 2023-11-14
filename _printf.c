@@ -179,7 +179,7 @@ PRINTF_STATE_SPEC_:
 				}
 
 				/*Reset state to NORMAL*/
-				#undef PRINTF_HEX_UPPER
+				hexUpper = false;
 				state = PRINTF_STATE_NORMAL;
 				length = PRINTF_LENGTH_DEFAULT;
 				base = 10;
