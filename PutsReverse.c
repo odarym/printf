@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * PutsReverse - Print string in reverse
  * 
