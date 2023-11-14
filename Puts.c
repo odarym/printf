@@ -7,7 +7,6 @@
  *
  * Return: 0 for failure and the number of characters printed for sucess
 */
-
 int Puts(char *string)
 {
 	int length = 0;
@@ -22,6 +21,14 @@ int Puts(char *string)
 }
 
 
+/**
+ * PutsCustom - put a string in a custom way if printf
+ *  receives S custom specifier
+ *
+ * @string: The string to print
+ *
+ * Return: 0 for failure and the number of characters printed for sucess
+*/
 int PutsCustom(char *string)
 {
 	uint8_t i = 0;
