@@ -25,7 +25,9 @@ int main(void)
 				-100000000l, 0xdeadbeeful, 10200300400l, 0xdeadbeeffeebdaedul);
 	printf("Formatted: %ld %lx %lld %llx\r\n",
 				-100000000l, 0xdeadbeeful, 10200300400l, 0xdeadbeeffeebdaedul);
-
+	
+	addr = (void *)0x7ffe637541f0;
+	
 	len = _printf("Let's try to printf a simple sentence.\n");
 	_printf("Address:[%p]\n", addr);
 	_printf("Len:[%d]\n", len);
