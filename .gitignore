@@ -2,7 +2,6 @@
 *.exe
 .vscode
 *.swp
-*main.c*
 .gdb_history
 peda*
 
