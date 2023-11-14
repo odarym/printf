@@ -165,6 +165,7 @@ PRINTF_STATE_SPEC_:
 					/*Print hex chars in uppercase*/
 						base = 16;
 						sign = false;
+						hexUpper = true;
 						count += PrintfNum(va_arg(args, int), lenState, sign, base, hexUpper);
 						break;
 					case 'p':
@@ -281,7 +282,7 @@ uint8_t PrintfNum(uint64_t arg, uint8_t lenState, bool sign, uint8_t base, bool 
 	/*Convert number to string - Upper case for hex*/
 	if (hexUpper)
 		for (j = 10; j < 16; j++)
-			hexChars[j] += ' ';
+			hexChars[j] -= ' ';
 			
 
 	/*Convert number to string- Lower case for hex*/
