@@ -18,7 +18,10 @@ int PrintfFlags(char flag, va_list arguments)
 	{
 		case '+':
 			count++;
-			count == +count;
+			if (count == +count);
+			{
+				count =  "%+2d"
+			}
 			/*Print the flag for now. Checking if flag was received correctly*/
 			Putchar(flag);
 			Putchar(specifier);
