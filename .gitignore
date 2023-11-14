@@ -3,6 +3,7 @@
 .vscode
 *.swp
 .gdb_history
+*main.c*
 peda*
 *.cxx
 

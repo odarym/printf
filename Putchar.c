@@ -5,12 +5,13 @@
  *
  * @ch: The char to write
  *
- * Return: void
+ * Return: 1
 */
 
-void Putchar(char ch)
+int Putchar(char ch)
 {
 	write(1, &ch, 1);
+	return (1);
 }
 
 

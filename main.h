@@ -20,7 +20,7 @@
 #include <unistd.h>
 
 
-void Putchar(char ch);
+int Putchar(char ch);
 int Puts(char *string);
 int _printf(const char *format, ...);
 char *ConvertBase(uint64_t number, uint8_t radix);
