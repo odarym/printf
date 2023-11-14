@@ -161,7 +161,7 @@ PRINTF_STATE_SPEC_:
 					case ' ':
 					case '#':
 					case '0':
-					count += PrintfFlags(format[i], va_arg(args, int));
+					count += PrintfFlags(format[i], args);
 					break;
 
 					/*Ignore invalid specifier characters for now*/
