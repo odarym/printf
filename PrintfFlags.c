@@ -15,7 +15,6 @@ int PrintfFlags(char flag, va_list arguments)
 		switch (flag)
 	{
 		case '+':
-		
 			count++;
 			/*Print the flag for now. Checking if flag was received correctly*/
 			Putchar(flag);
