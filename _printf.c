@@ -102,7 +102,7 @@ PRINTF_STATE_SPEC_:
 						count += Putchar('%');
 						break;
 					case 'b':
-						count += DecimalToBinary(va_arg(args, int64_t));
+						count += DecimalToBinary(va_arg(args, uint64_t));
 						break;
 					case 'd':
 					case 'i':
