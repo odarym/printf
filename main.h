@@ -29,11 +29,8 @@ int PutsCustom(char *string);
 int PrintfFlags(char flag, char specifier);
 int PutsReverse(char *string);
 
-#endif
 
 
 
 
 #endif
-
-
