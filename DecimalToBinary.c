@@ -1,8 +1,8 @@
 #include "main.h"
 
 /**
- * DecimalToBinary - Convert from deciml to binary 
- * 	and print the bits
+ * DecimalToBinary - Convert from deciml to binary
+ *  and print the bits
  *
  * @number: The base 10 number to convert
  *
