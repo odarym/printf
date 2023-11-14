@@ -23,7 +23,7 @@ uint8_t PrintfNum(uint64_t arg, uint8_t lenState, bool sign, uint8_t base, bool 
  * @format: The string specifying the format
  *
  * Return: the number of characters printed
- *  (excluding the null byte used to end output to strings)
+ * 
 */
 int _printf(const char *format, ...)
 {
@@ -157,20 +157,12 @@ PRINTF_STATE_SPEC_:
 						break;
 
 					case '+':
-						/*Handle flag*/
-						break;
 					case '-':
-						/*Handle flag*/
-						break;
 					case ' ':
-						/*Handle flag*/
-						break;
 					case '#':
-						/*Handle flag*/
-						break;
 					case '0':
-						/*Handle flag*/
-						break;
+					count += PrintfFlags(va_args(args, int), va_arg(args, int));
+					break;
 
 					/*Ignore invalid specifier characters for now*/
 					default:
