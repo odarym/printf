@@ -30,15 +30,14 @@ int _printf(const char *format, ...)
 	int i = 0, count = 0;
 
 	va_list args;
-	uint8_t state = PRINTF_STATE_NORMAL, length = PRINTF_LENGTH_DEFAULT, base = 10;
+	uint8_t state = PRINTF_STATE_NORMAL, length = PRINTF_LENGTH_DEFAULT,
+	base = 10;
 	bool hexUpper = false, sign = false;
 
-	/*Check the validity of the format string*/
-	if (!format)
+	if (!format) /*Check the validity of the format string*/
 		return (-1);
 
 	va_start(args, format);
-
 	for (; format[i]; i++)
 	{
 		switch (state)
@@ -112,24 +111,20 @@ PRINTF_STATE_SPEC_:
 						break;
 					case 'u':
 						base = 10, sign = false;
-						count += PrintfNum(va_arg(args, uint64_t),
-													length, sign, base, hexUpper);
+						count += PrintfNum(va_arg(args, uint64_t), length, sign, base, hexUpper);
 						break;
 					case 'x':
 						base = 16, sign = false;
-						count += PrintfNum(va_arg(args, int64_t),
-													length, sign, base, hexUpper);
+						count += PrintfNum(va_arg(args, int64_t), length, sign, base, hexUpper);
 						break;
 					case 'X':
 						base = 16, sign = false, hexUpper = true;
-						count += PrintfNum(va_arg(args, int64_t),
-											length, sign, base, hexUpper);
+						count += PrintfNum(va_arg(args, int64_t), length, sign, base, hexUpper);
 						break;
 					case 'p':
 						count += Puts("0x");
 						base = 16, sign = false, length = PRINTF_LENGTH_LONG_LONG;
-						count += PrintfNum(va_arg(args, uint64_t),
-											length, sign, base, hexUpper);
+						count += PrintfNum(va_arg(args, uint64_t), length, sign, base, hexUpper);
 						break;
 					case 'o':
 						base = 8, sign = false;
@@ -170,6 +165,7 @@ PRINTF_STATE_SPEC_:
  * @length: The state to format to
  * @sign: The number sign
  * @base: The number base
+ * @hexUpper: The case of hex chars
  *
  * Return: the number of characters in the value
 */

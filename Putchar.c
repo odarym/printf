@@ -10,8 +10,7 @@
 
 int Putchar(char ch)
 {
-	write(1, &ch, 1);
-	return (1);
+	return (write(1, &ch, 1));
 }
 
 
