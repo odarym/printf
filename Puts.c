@@ -9,15 +9,10 @@
 */
 int Puts(char *string)
 {
-	int length = 0;
-
 	if (!string)
 		return (0);
 
-	length = strlen(string);
-	write(1, string, length);
-
-	return (length);
+	return (write(1, string, strlen(string)));
 }
 
 
@@ -49,23 +44,20 @@ int PutsCustom(char *string)
 			/*Single digit hex number*/
 			if ((string[i] < 17))
 			{
-				Putchar('0');
-				Putchar(buffer[0]);
-				count += 2;
+				count += Putchar('0');
+				count += Putchar(buffer[0]);
 				continue;
 			}
 			else
 			{
-				Putchar(buffer[0]);
-				Putchar(buffer[1]);
-				count += 2;
+				count += Putchar(buffer[0]);
+				count += Putchar(buffer[1]);
 			}
 			/*Skip to the next loop iteration*/
 			continue;
 		}
 
-		Putchar(string[i]);
-		count++;
+		count += Putchar(string[i]);
 	}
 
 	return (count);
