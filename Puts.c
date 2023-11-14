@@ -42,7 +42,7 @@ int PutsCustom(char *string)
 	for (; i < length; i++)
 	{
 		/*Range of non printable ascii characters*/
-		if ((string[i] < 32) || (string[i] > 126))
+		if ((string[i] < 0) || (string[i] < 32) || (string[i] > 126))
 		{
 			count += Puts("\\x");
 			buffer = (char *)ConvertBase(string[i], 16);
