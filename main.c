@@ -19,6 +19,13 @@ int main(void)
 	long int ui32 = 0;
 	int num = 10;
 
+	int returns = 0;
+
+	returns = printf("hello, how are you\n%");
+	printf("printf returns: %d\n", returns);
+	
+	returns = _printf("hello, how are you\n%");
+	printf("_printf returns: %d\n", returns);
 
 	_printf("Formatted: %d %i %x %p %o %hd %hi %hhu %hhd\r\n",
 				1234, -5678, 0xdead, 0xbeef, 012345, (short)27, (short)-42, (unsigned char)20, (char)-10);
