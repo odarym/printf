@@ -274,7 +274,6 @@ uint8_t PrintfNum(uint64_t arg, uint8_t lenState, bool sign, uint8_t base, bool 
 	if (hexUpper)
 		for (j = 10; j < 16; j++)
 			hexChars[j] -= ' ';
-			
 
 	/*Convert number to string- Lower case for hex*/
 	do {
