@@ -19,7 +19,7 @@ int PrintfFlags(char flag, va_list arguments)
 		case '+':
 			count++;
 			{
-				if (count[], "%2d" == 0)
+				if (; "%2d" == 0)
 				{
 					count = true;
 				}
