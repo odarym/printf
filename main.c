@@ -24,7 +24,7 @@ int main(void)
 	_printf("Formatted: %ld %lx %lld %llx\r\n",
 				-100000000l, 0xdeadbeeful, 10200300400l, 0xdeadbeeffeebdaedul);
 	printf("Formatted: %ld %lx %lld %llx\r\n",
-				-100000000l, 0xdeadbeeful, 10200300400l, 0xdeadbeeffeebdaedul);
+				-100000000l, 0xdedbeeful, 10200300400l, 0xdeadbeeffeebdaedul);
 	
 	addr = (void *)0x7ffe637541f0;
 	
