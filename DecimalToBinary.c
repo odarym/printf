@@ -1,5 +1,12 @@
 #include "main.h"
 
+/**
+ * DecimalToBinary - Convert from deciml to binary number system
+ *
+ * @number: The base 10 number to convert
+ *
+ * Return: The number of digits in the binary number
+*/
 int DecimalToBinary(int number)
 {
 	const char binChars[] = {"01"};
@@ -14,12 +21,12 @@ int DecimalToBinary(int number)
 		buffer[i++] = binChars[rem];
 	} while (number > 0);
 
-	
+
 	while (--i > -1)
 	{
 		Putchar(buffer[i]);
 		count++;
 	}
-	
+
 	return (count);
 }
