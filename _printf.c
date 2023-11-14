@@ -127,7 +127,7 @@ PRINTF_STATE_SPEC_:
 					case 'i':
 						base = 10;
 						sign = true;
-						count += PrintfNum(va_arg(args, int32_t), length, sign, base, hexUpper);
+						count += PrintfNum(va_arg(args, unsigned long), length, sign, base, hexUpper);
 						break;
 					case 'u':
 						base = 10;

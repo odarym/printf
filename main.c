@@ -12,26 +12,30 @@
 
 int main(void)
 {
-	int len;
-	int len2;
-	unsigned int ui;
-	void *addr;
+	int len = 0;
+	int len2 = 0;
+	unsigned int ui = 0;
+	void *addr = 0;
 	long int ui32 = 0;
+	int num = 10;
+
+	_printf("Formatted: %d %i %x %p %o %hd %hi %hhu %hhd\r\n",
+				1234, -5678, 0xdead, 0xbeef, 012345, (short)27, (short)-42, (unsigned char)20, (char)-10);
+	printf("Formatted: %d %i %x %p %o %hd %hi %hhu %hhd\r\n",
+				1234, -5678, 0xdead, 0xbeef, 012345, (short)27, (short)-42, (unsigned char)20, (char)-10);
+	_printf("Formatted: %ld %lx %lld %llx\r\n",
+				-100000000l, 0xdeadbeeful, 10200300400l, 0xdeadbeeffeebdaedul);
+	printf("Formatted: %ld %lx %lld %llx\r\n",
+				-100000000l, 0xdeadbeeful, 10200300400l, 0xdeadbeeffeebdaedul);
 
 	len = _printf("Let's try to printf a simple sentence.\n");
-	len2 = printf("Let's try to printf a simple sentence.\n");
 	ui = (unsigned int)INT_MAX + 1024;
 	addr = (void *)0x7ffe637541f0;
 	_printf("Length:[%d, %i]\n", len, len);
-	printf("Length:[%d, %i]\n", len2, len2);
 	_printf("Negative:[%d]\n", -762534);
-	printf("Negative:[%d]\n", -762534);
 	_printf("Unsigned:[%u]\n", ui);
-	printf("Unsigned:[%u]\n", ui);
 	_printf("Unsigned octal:[%o]\n", ui);
-	printf("Unsigned octal:[%o]\n", ui);
 	_printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
-	printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
 	/*
 	_printf("Character:[%c]\n", 'H');
 	printf("Character:[%c]\n", 'H');
@@ -39,19 +43,19 @@ int main(void)
 	printf("String:[%s]\n", "I am a string !");
 	*/
 	_printf("Address:[%p]\n", addr);
-	printf("Address:[%p]\n", addr);
-	len = _printf("Percent:[%%]\n");
-	len2 = printf("Percent:[%%]\n");
 	_printf("Len:[%d]\n", len);
-	printf("Len:[%d]\n", len2);
+	printf("Len2:[%d]\n", len2);
 	len = _printf("%r\n", "Unknown");
 	_printf("Len:[%d]\n", len);
-	printf("Unknown:[%r]\n");
 	_printf("%b\n", 8);
 	_printf("%b\n", 7);
 	_printf("%b\n", 9);
 	_printf("%b\n", 65536);
-	_printf("%b\n", 0x8000000000000000);
+	_printf("%b\n", 0x9000000000000000);
+    /* print value using %d*/
+	_printf("Value of num using %%d is = %d\n", num);
+    /* print value using %i*/
+    _printf("Value of num using %%i is = %i\n", num);
 	/* Max 32-bit int value = 4294967296 - 1*/
 	/**
 	 * 1000000000000000000000000000000000000000000000000000000000000000
