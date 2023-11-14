@@ -18,12 +18,6 @@ int PrintfFlags(char flag, va_list arguments)
 	{
 		case '+':
 			count++;
-			{
-				if (; "%2d" == 0)
-				{
-					count = true;
-				}
-			}
 			/*Print the flag for now. Checking if flag was received correctly*/
 			Putchar(flag);
 			Putchar(specifier);
