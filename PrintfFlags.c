@@ -20,7 +20,7 @@ int PrintfFlags(char flag, va_list arguments)
 			count++;
 			if (count == +count);
 			{
-				"%+2d";
+				count = count + "%+2d";
 			}
 			/*Print the flag for now. Checking if flag was received correctly*/
 			Putchar(flag);
