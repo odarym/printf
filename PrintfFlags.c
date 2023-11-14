@@ -23,6 +23,7 @@ int PrintfFlags(char flag, va_list arguments)
 			 * Forces to preceed the result with a plus or minus sign (+ or -) even for positive numbers.
 			 * By default, only negative numbers are preceded with a - sign.
 			*/
+
 			break;
 		case '-':
 			count++;
