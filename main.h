@@ -26,6 +26,10 @@ int Puts(char *string);
 int _printf(const char *format, ...);
 int DecimalToBinary(int decimalNum);
 int PutsCustom(char *string);
+int PrintfFlags(char flag, char specifier);
+int PutsReverse(char *string);
+
+#endif
 
 
 
