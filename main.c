@@ -48,7 +48,6 @@ int main(void)
 	_printf("%b\n", 7);
 	_printf("%b\n", 9);
 
-	/*Flags secifiers tests
 	_printf("\nFlags specifiers tests\n\n");
 	_printf("Preceding with blanks: %10d \n", 1977);
 	printf("Preceding with blanks: %10d \n", 1977);
@@ -60,7 +59,6 @@ int main(void)
 	printf("floats: %4.2f %+.0e %E \n", 3.1416, 3.1416, 3.1416);
 	_printf("Width trick: %*d \n", 5, 10);
 	printf("Width trick: %*d \n", 5, 10);
-	*/
 	
 	return (0);
 }
