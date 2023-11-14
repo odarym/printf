@@ -27,9 +27,9 @@ int main(void)
 	returns = _printf("hello, how are you\n%");
 	printf("_printf returns: %d\n", returns);
 
-	_printf("Formatted: %d %i %x %p %o %hd %hi %hhu %hhd\r\n",
+	_printf("Formatted: %d %i %X %p %o %hd %hi %hhu %hhd\r\n",
 				1234, -5678, 0xdead, 0xbeef, 012345, (short)27, (short)-42, (unsigned char)20, (char)-10);
-	printf("Formatted: %d %i %x %p %o %hd %hi %hhu %hhd\r\n",
+	printf("Formatted: %d %i %X %p %o %hd %hi %hhu %hhd\r\n",
 				1234, -5678, 0xdead, 0xbeef, 012345, (short)27, (short)-42, (unsigned char)20, (char)-10);
 	_printf("Formatted: %ld %lx %lld %llx\r\n",
 				-100000000l, 0xdeadbeeful, 10200300400l, 0xdeadbeeffeebdaedul);
