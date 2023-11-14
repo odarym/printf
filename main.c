@@ -1,5 +1,7 @@
 #include <limits.h>
 #include <stdio.h>
+#include <math.h>
+
 #include "main.h"
 
 /**
@@ -47,6 +49,10 @@ int main(void)
 	_printf("%b\n", 8);
 	_printf("%b\n", 7);
 	_printf("%b\n", 9);
+	_printf("%b\n", 65356);
+	_printf("%d\n", pow(2, 64));
+	_printf("%b\n", pow(2, 64));
+	_printf("%S\n", "Best\nSchool");
 
 	_printf("\nFlags specifiers tests\n\n");
 	_printf("Preceding with blanks: %10d \n", 1977);

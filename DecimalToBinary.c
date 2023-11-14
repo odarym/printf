@@ -8,10 +8,10 @@
  *
  * Return: The number of digits in the binary number
 */
-int DecimalToBinary(int number)
+int DecimalToBinary(uint64_t number)
 {
 	const char binChars[] = {"01"};
-	char buffer[16] = { 0 };
+	char buffer[64] = { 0 }; /*Assumes architecture is 64 bit*/
 	uint8_t count = 0;
 	int i = 0;
 
