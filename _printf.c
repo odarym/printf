@@ -14,7 +14,8 @@
 #define PRINTF_LENGTH_LONG_LONG	4
 
 
-uint8_t PrintfNum(uint64_t arg, uint8_t lenState, bool sign, uint8_t base, bool hexUpper);
+uint8_t PrintfNum(uint64_t arg, uint8_t lenState,
+					bool sign, uint8_t base, bool hexUpper);
 
 
 /**
@@ -23,7 +24,6 @@ uint8_t PrintfNum(uint64_t arg, uint8_t lenState, bool sign, uint8_t base, bool 
  * @format: The string specifying the format
  *
  * Return: the number of characters printed
- * 
 */
 int _printf(const char *format, ...)
 {
@@ -148,7 +148,8 @@ PRINTF_STATE_SPEC_:
 						base = 16;
 						sign = false;
 						lenState = PRINTF_LENGTH_LONG_LONG;
-						count += PrintfNum(va_arg(args, uint64_t), lenState, sign, base, hexUpper);
+						count += PrintfNum(va_arg(args, uint64_t),
+											lenState, sign, base, hexUpper);
 						break;
 					case 'o':
 						base = 8;
@@ -196,7 +197,8 @@ PRINTF_STATE_SPEC_:
  *
  * Return: the number of characters in the value
 */
-uint8_t PrintfNum(uint64_t arg, uint8_t lenState, bool sign, uint8_t base, bool hexUpper)
+uint8_t PrintfNum(uint64_t arg, uint8_t lenState,
+					bool sign, uint8_t base, bool hexUpper)
 {
 	char buffer[32] = { 0 };
 	uint64_t number = 0;
