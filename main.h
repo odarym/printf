@@ -26,12 +26,9 @@ int Puts(char *string);
 int _printf(const char *format, ...);
 int DecimalToBinary(int decimalNum);
 int PutsCustom(char *string);
-<<<<<<< HEAD
 int PrintfFlags(char flag, char specifier);
 int PutsReverse(char *string);
-=======
-int PrintfFlags(char flag, va_list arguments);
->>>>>>> 35431d7b4734563166b7f0a4cd430a7a56678e84
+
 
 
 #endif
