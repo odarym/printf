@@ -13,7 +13,7 @@ int PrintfFlags(char flag, va_list arguments)
 	char specifier = va_arg(arguments, int);
 	int count = 0;
 
-    switch (flag)
+    switch (f lag)
     {
         case '+':
             count++;
