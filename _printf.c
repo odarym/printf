@@ -90,11 +90,11 @@ PRINTF_STATE_SPEC_:
 					case 'd':
 					case 'i':
 						base = 10, sign = true;
-						count += PrintfNum(va_arg(args, int32_t), length, sign, base, hexUpper);
+						count += PrintfNum(va_arg(args, uint64_t), length, sign, base, hexUpper);
 						break;
 					case 'u':
 						base = 10, sign = false;
-						count += PrintfNum(va_arg(args, uint32_t), length, sign, base, hexUpper);
+						count += PrintfNum(va_arg(args, uint64_t), length, sign, base, hexUpper);
 						break;
 					case 'x':
 						base = 16, sign = false;
