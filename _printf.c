@@ -109,8 +109,7 @@ uint8_t PrintfNum(uint64_t arg, uint8_t length,
 {
 	char buffer[32] = { 0 };
 	uint64_t number = 0;
-	int8_t numSign = 1;
-	int8_t i = 0, j = 0;
+	int8_t numSign = 1, i = 0, j = 0;
 	uint8_t count = 0;
 	char hexChars[] = {"0123456789abcdef"};
 
@@ -145,7 +144,7 @@ uint8_t PrintfNum(uint64_t arg, uint8_t length,
 					n = -n;
 					numSign = -1;
 				}
-				number = (int)n;
+				number = (unsigned int)n;
 			}
 			else
 			{
@@ -202,9 +201,13 @@ uint8_t PrintfNum(uint64_t arg, uint8_t length,
  * printf function and prints them appropriately
  *
  * @countPtr: The number to format
- * @format: The state to format to
- * @sign: The number sign
+ * @i: The index of the character in format currently
+ *  being handled by printf
+ * @format: The format string being used by printf
+ * @arguments: The va_list of arguments in printf
  * @base: The number base
+ * @sign: The number sign
+ * @length: The length state of printf for the next arg
  * @hexUpper: The case of hex chars
  *
  * Return: the number of characters in the value
