@@ -69,7 +69,10 @@ void PrintfSpecifierParser(int *countPtr, uint16_t i, const char *format,
 		case 'p':
 			nextArg = va_arg(arguments, uint64_t);
 			if (!nextArg)
+			{
+				*countPtr += Puts("(nil)");
 				break;
+			}
 			*countPtr += Puts("0x");
 			base = 16, sign = false, length = LEN_LONG_LONG;
 			*countPtr += PrintfNum(nextArg,
@@ -81,8 +84,8 @@ void PrintfSpecifierParser(int *countPtr, uint16_t i, const char *format,
 									length, sign, base, hexUpper);
 			break;
 		default:
-			*countPtr += Putchar(format[i - 1]);
-			*countPtr += Putchar(format[i]);
+			*countPtr += Putchar('%');
+			/* *countPtr += Putchar(format[i]); */
 			break;
 	}
 }
