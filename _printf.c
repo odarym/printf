@@ -132,7 +132,7 @@ PRINTF_STATE_SPEC_:
 	}
 	va_end(args);
 
-	if (format[i - 1] == '%')
+	if ((format[i - 1] == '%') && (format[i - 3]))
 		count = -1;
 
 	return (count);
