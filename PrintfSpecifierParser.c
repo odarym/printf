@@ -20,8 +20,6 @@ void PrintfSpecifierParser(int *countPtr, uint16_t i, const char *format,
 								va_list arguments, uint8_t base, bool sign,
 									PrintfLengthState length, bool hexUpper)
 {
-	uint64_t nextArg = 0;
-
 	switch (format[i])
 	{
 		case 'c':
@@ -67,21 +65,22 @@ void PrintfSpecifierParser(int *countPtr, uint16_t i, const char *format,
 									length, sign, base, hexUpper);
 			break;
 		case 'p':
-			nextArg = va_arg(arguments, uint64_t);
-			if (!nextArg)
-			{
-				*countPtr += Puts("(nil)");
-				break;
-			}
 			*countPtr += Puts("0x");
 			base = 16, sign = false, length = LEN_LONG_LONG;
-			*countPtr += PrintfNum(nextArg,
+			*countPtr += PrintfNum(va_arg(arguments, uint64_t),
 									length, sign, base, hexUpper);
 			break;
 		case 'o':
 			base = 8, sign = false;
 			*countPtr += PrintfNum(va_arg(arguments, int64_t),
 									length, sign, base, hexUpper);
+			break;
+		case '+':
+		case '-':
+		case ' ':
+		case '#':
+		case '0':
+			*countPtr += PrintfFlags(format[i], arguments);
 			break;
 		default:
 			*countPtr += Putchar(format[i - 1]);
