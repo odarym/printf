@@ -1,17 +1,27 @@
 #include "main.h"
 
 
-#define PRINTF_STATE_NORMAL 0
-#define PRINTF_STATE_LENGTH 1
-#define PRINTF_STATE_LENGTH_SHORT 2
-#define PRINTF_STATE_LENGTH_LONG 3
-#define PRINTF_STATE_SPEC 4
+typedef enum
+{
+	NORMAL = 0, LENGTH, SHORT, LONG, SPEC
+} PrintfState;
 
-#define PRINTF_LENGTH_DEFAULT 0
-#define PRINTF_LENGTH_SHORT_SHORT 1
-#define PRINTF_LENGTH_SHORT	2
-#define PRINTF_LENGTH_LONG	3
-#define PRINTF_LENGTH_LONG_LONG	4
+typedef enum
+{
+	LEN_DEFAULT = 0, LEN_SHORT_SHORT, LEN_SHORT, LEN_LONG, LEN_LONG_LONG
+} PrintfLengthState;
+
+#define NORMAL 0
+#define PRINTF_STATE_LENGTH 1
+#define SHORT 2
+#define PRINTF_STATE_LENGTH_LONG 3
+#define SPEC 4
+
+#define LEN_DEFAULT 0
+#define LEN_SHORT_SHORT 1
+#define LEN_SHORT	2
+#define LONG	3
+#define LEN_LONG_LONG	4
 
 
 uint8_t PrintfNum(uint64_t arg, uint8_t length,
@@ -28,10 +38,10 @@ uint8_t PrintfNum(uint64_t arg, uint8_t length,
 int _printf(const char *format, ...)
 {
 	int i = 0, count = 0;
-
 	va_list args;
-	uint8_t state = PRINTF_STATE_NORMAL, length = PRINTF_LENGTH_DEFAULT,
-	base = 10;
+	PrintfState state = NORMAL;
+	PrintfLengthState length = LEN_DEFAULT;
+	uint8_t base = 10;
 	bool hexUpper = false, sign = false;
 
 	if (!format) /*Check the validity of the format string*/
@@ -42,47 +52,44 @@ int _printf(const char *format, ...)
 	{
 		switch (state)
 		{
-			case PRINTF_STATE_NORMAL:
+			case NORMAL:
 				switch (format[i])
 				{
 					case '%':
-						state = PRINTF_STATE_LENGTH;
+						state = LENGTH;
 						break;
 					default:
 						count += Putchar(format[i]);
 						break;
 				}
 				break;
-
-			case PRINTF_STATE_LENGTH:
+			case LENGTH:
 				switch (format[i])
 				{
 					case 'h':
-						length = PRINTF_LENGTH_SHORT, state = PRINTF_STATE_LENGTH_SHORT;
+						length = LEN_SHORT, state = SHORT;
 						break;
 					case 'l':
-						length =  PRINTF_LENGTH_LONG;
+						length =  LONG;
 						break;
 					default:
 						goto PRINTF_STATE_SPEC_;
 				}
 				break;
-
-			case PRINTF_STATE_LENGTH_SHORT:
+			case SHORT:
 				if (format[i] == 'h')
-					length = PRINTF_LENGTH_SHORT_SHORT, state = PRINTF_STATE_SPEC;
+					length = LEN_SHORT_SHORT, state = SPEC;
 				else
 					goto PRINTF_STATE_SPEC_;
 
 				break;
-
-			case PRINTF_STATE_LENGTH_LONG:
+			case LONG:
 				if (format[i] == 'l')
-					length = PRINTF_LENGTH_LONG_LONG, state = PRINTF_STATE_SPEC;
+					length = LEN_LONG_LONG, state = SPEC;
 				else
 					goto PRINTF_STATE_SPEC_;
 				break;
-			case PRINTF_STATE_SPEC:
+			case SPEC:
 PRINTF_STATE_SPEC_:
 				switch (format[i])
 				{
@@ -123,14 +130,13 @@ PRINTF_STATE_SPEC_:
 						break;
 					case 'p':
 						count += Puts("0x");
-						base = 16, sign = false, length = PRINTF_LENGTH_LONG_LONG;
+						base = 16, sign = false, length = LEN_LONG_LONG;
 						count += PrintfNum(va_arg(args, uint64_t), length, sign, base, hexUpper);
 						break;
 					case 'o':
 						base = 8, sign = false;
 						count += PrintfNum(va_arg(args, int64_t), length, sign, base, hexUpper);
 						break;
-
 					case '+':
 					case '-':
 					case ' ':
@@ -138,15 +144,13 @@ PRINTF_STATE_SPEC_:
 					case '0':
 						count += PrintfFlags(format[i], args);
 						break;
-
 					default:
 						count += Putchar(format[i - 1]);
 						count += Putchar(format[i]);
 						break;
 				}
 				/*Reset state to NORMAL*/
-				sign = false, hexUpper = false, base = 10,
-				state = PRINTF_STATE_NORMAL, length = PRINTF_LENGTH_DEFAULT;
+				sign = false, hexUpper = false, base = 10, state = NORMAL, length = LEN_DEFAULT;
 				break;
 		}
 	}
@@ -182,9 +186,9 @@ uint8_t PrintfNum(uint64_t arg, uint8_t length,
 	/*Process length*/
 	switch (length)
 	{
-		case PRINTF_LENGTH_SHORT_SHORT:
-		case PRINTF_LENGTH_SHORT:
-		case PRINTF_LENGTH_DEFAULT:
+		case LEN_SHORT_SHORT:
+		case LEN_SHORT:
+		case LEN_DEFAULT:
 			if (sign)
 			{
 				int n = arg;
@@ -201,8 +205,8 @@ uint8_t PrintfNum(uint64_t arg, uint8_t length,
 				number = (unsigned int)arg;
 			}
 			break;
-		case PRINTF_LENGTH_LONG:
-		case PRINTF_LENGTH_LONG_LONG:
+		case LONG:
+		case LEN_LONG_LONG:
 			if (sign)
 			{
 				int64_t n = arg;
@@ -245,4 +249,8 @@ uint8_t PrintfNum(uint64_t arg, uint8_t length,
 
 	return (count);
 }
+
+
+
+
 
