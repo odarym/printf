@@ -12,7 +12,7 @@ char *ConvertBase(uint64_t number, uint8_t radix)
 {
 	const char hexChars[] = {"0123456789ABCDEF"};
 	char buffer[2] = { '0', '0' };
-	char *bufferPtr = (char *)&(buffer[0]);
+	char *buff erPtr = (char *)&(buffer[0]);
 	char reverseBuffer[2] = { '0' };
 	uint8_t count = 0;
 	int i = 0;
