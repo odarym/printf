@@ -1,13 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-/*
- * File: main.h
- *
- * Desc: Header file containing declartions for functions
- * and all standard library headers that will be used in the project
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
