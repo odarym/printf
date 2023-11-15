@@ -8,49 +8,48 @@
  *
  * Return: Print count
  */
-int PrintfFlags(char flag, va_list arguments) {
-    char specifier = va_arg(arguments, int);
-    int count = 0;
+int PrintfFlags(char flag, va_list arguments)
+{
+	char specifier = va_arg(arguments, int);
+	int count = 0;
 
-    // Initial state
-    enum State state = STATE_NORMAL;
+	switch (flag)
+	{
+		case '+':
+			count++;
+			Putchar(flag);
+			Putchar(specifier);
+			// Handle behavior for '+' flag in different states if needed
+			break;
 
-    switch (flag) {
-        case '+':
-            count++;
-            Putchar(flag);
-            Putchar(specifier);
-            // Handle behavior for '+' flag in different states if needed
-            break;
+		case '-':
+			count++;
+			Putchar(flag);
+			Putchar(specifier);
+			// Handle behavior for '-' flag in different states if needed
+			break;
 
-        case '-':
-            count++;
-            Putchar(flag);
-            Putchar(specifier);
-            // Handle behavior for '-' flag in different states if needed
-            break;
+		case ' ':
+			count++;
+			Putchar(flag);
+			Putchar(specifier);
+			// Handle behavior for ' ' flag in different states if needed
+			break;
 
-        case ' ':
-            count++;
-            Putchar(flag);
-            Putchar(specifier);
-            // Handle behavior for ' ' flag in different states if needed
-            break;
+		case '#':
+			count++;
+			Putchar(flag);
+			Putchar(specifier);
+			// Handle behavior for '#' flag in different states if needed
+			break;
 
-        case '#':
-            count++;
-            Putchar(flag);
-            Putchar(specifier);
-            // Handle behavior for '#' flag in different states if needed
-            break;
+		case '0':
+			count++;
+			Putchar(flag);
+			Putchar(specifier);
+			// Handle behavior for '0' flag in different states if needed
+			break;
+	}
 
-        case '0':
-            count++;
-            Putchar(flag);
-            Putchar(specifier);
-            // Handle behavior for '0' flag in different states if needed
-            break;
-    }
-
-    return count;
+	return count;
 }
