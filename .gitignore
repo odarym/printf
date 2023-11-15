@@ -5,4 +5,5 @@
 .gdb_history
 *main.c*
 peda*
+task-lh.c
 *.cxx
