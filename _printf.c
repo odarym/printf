@@ -15,7 +15,7 @@ int _printf(const char *format, ...)
 	PrintfState state = NORMAL;
 	PrintfLengthState length = LEN_DEFAULT;
 	uint8_t base = 10;
-	bool hex Upper = false, sign = false;
+	bool hexUpper = false, sign = false;
 
 	if (!format) /*Check the validity of the format string*/
 		return (-1);
