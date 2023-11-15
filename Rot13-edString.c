@@ -12,7 +12,7 @@ int PutsRot13(char *string)
 	int stringLength = strlen(string);
 	int count = 0;
 
-	count = str ingLength;
+	count = stringLength;
 	
 	/*Change string to Rot13 and print it*/
 	/*Update count if needed*/
