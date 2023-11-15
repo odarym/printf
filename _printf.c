@@ -11,18 +11,6 @@ typedef enum
 	LEN_DEFAULT = 0, LEN_SHORT_SHORT, LEN_SHORT, LEN_LONG, LEN_LONG_LONG
 } PrintfLengthState;
 
-#define NORMAL 0
-#define PRINTF_STATE_LENGTH 1
-#define SHORT 2
-#define PRINTF_STATE_LENGTH_LONG 3
-#define SPEC 4
-
-#define LEN_DEFAULT 0
-#define LEN_SHORT_SHORT 1
-#define LEN_SHORT	2
-#define LONG	3
-#define LEN_LONG_LONG	4
-
 
 uint8_t PrintfNum(uint64_t arg, uint8_t length,
 					bool sign, uint8_t base, bool hexUpper);
