@@ -68,7 +68,6 @@ int _printf(const char *format, ...)
 					length = LEN_SHORT_SHORT, state = SPEC;
 				else
 					goto PRINTF_STATE_SPEC_;
-
 				break;
 			case LONG:
 				if (format[i] == 'l')
