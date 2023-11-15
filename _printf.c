@@ -58,7 +58,7 @@ int _printf(const char *format, ...)
 						length = LEN_SHORT, state = SHORT;
 						break;
 					case 'l':
-						length =  LONG;
+						length =  LEN_LONG;
 						break;
 					default:
 						goto PRINTF_STATE_SPEC_;
