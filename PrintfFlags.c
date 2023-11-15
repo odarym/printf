@@ -20,7 +20,7 @@ int PrintfFlags(char flag, va_list arguments)
 			Putchar(specifier);
 			if (specifier == 'd' || specifier == 'i')
 			{
-				int number = va_arg(arguments, int);
+				int number = va_arg(argu ments, int);
 
 				if (number >= 0)
 				{
