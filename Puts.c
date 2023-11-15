@@ -30,7 +30,8 @@ int PutsCustom(char *string)
 {
 	uint8_t i = 0;
 	int length = 0, count = 0;
-	char *buffer = NULL;
+	/* const char hexChars[] = {"0123456789ABCDEF"}; */
+	char buffer[2] = { 0 };
 
 	if (!string)
 		return (0);
@@ -42,7 +43,7 @@ int PutsCustom(char *string)
 		if ((string[i] < 0) || (string[i] < 32) || (string[i] > 126))
 		{
 			count += Puts("\\x");
-			buffer = (char *)ConvertBase(string[i], 16);
+			DecToHex(buffer, string[i]);
 			/*Single digit hex number*/
 			if ((string[i] < 17))
 			{

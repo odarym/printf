@@ -21,7 +21,7 @@
 int Putchar(char ch);
 int Puts(char *string);
 int _printf(const char *format, ...);
-char *ConvertBase(uint64_t number, uint8_t radix);
+void DecToHex(char *outBuffer, uint64_t number);
 int DecimalToBinary(uint32_t decimalNum);
 int PutsCustom(char *string);
 int PrintfFlags(char flag, va_list arguments);
