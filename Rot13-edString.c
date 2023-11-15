@@ -1,9 +1,10 @@
 #include "main.h"
 
 /**
- * PutsReverse - Print string in reverse
+ * PutsRot13 - Print string in rot13 form
  *
- * @string: The string being printed in reverse
+ * @string: The string being printed in rot13
+ *
  * Return:void
 */
 
