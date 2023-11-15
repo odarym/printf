@@ -78,7 +78,8 @@ int _printf(const char *format, ...)
 				break;
 			case SPEC:
 PRINTF_STATE_SPEC_:
-				PrintfSpecifierParser(&count, i, format, args, base, sign, length, hexUpper);
+				PrintfSpecifierParser(&count, i, format, args,
+											base, sign, length, hexUpper);
 				/*Reset state to NORMAL*/
 				sign = false, hexUpper = false, base = 10,
 				state = NORMAL, length = LEN_DEFAULT;
