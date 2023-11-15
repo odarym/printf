@@ -17,7 +17,7 @@ int PutsReverse(char *string)
 	{
 		do {
 			Putchar(string[--stringLength]);
-		} while (st ringLength > 0);
+		} while (stringLength > 0);
 	}
 
 	return (count);
