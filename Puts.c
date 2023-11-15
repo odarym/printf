@@ -45,7 +45,7 @@ int PutsCustom(char *string)
 			if ((string[i] < 17))
 			{
 				count += Putchar('0');
-				count += Putchar(buffer[0]);
+				count += Putc har(buffer[0]);
 				continue;
 			}
 			else
