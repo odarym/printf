@@ -59,7 +59,6 @@ int PutsCustom(char *string)
 			/*Skip to the next loop iteration*/
 			continue;
 		}
-
 		count += Putchar(string[i]);
 	}
 
