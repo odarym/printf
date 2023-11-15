@@ -68,7 +68,6 @@ int _printf(const char *format, ...)
 					length = LEN_SHORT_SHORT, state = SPEC;
 				else
 					goto PRINTF_STATE_SPEC_;
-
 				break;
 			case LONG:
 				if (format[i] == 'l')
@@ -78,7 +77,8 @@ int _printf(const char *format, ...)
 				break;
 			case SPEC:
 PRINTF_STATE_SPEC_:
-				PrintfSpecifierParser(&count, i, format, args, base, sign, length, hexUpper);
+				PrintfSpecifierParser(&count, i, format, args,
+											base, sign, length, hexUpper);
 				/*Reset state to NORMAL*/
 				sign = false, hexUpper = false, base = 10,
 				state = NORMAL, length = LEN_DEFAULT;
