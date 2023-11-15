@@ -16,18 +16,9 @@ int PrintfFlags(char flag, va_list arguments)
 	switch (flag)
 	{
 		case '+':
+        /*Handle behavior for '+' flag in diffrent states*/
 			Putchar(flag);
 			Putchar(specifier);
-			if (specifier == 'd' || specifier == 'i')
-			{
-				int number = va_arg(arguments, int);
-
-				if (number >= 0)
-				{
-					Putchar('+');
-					count++;
-				}
-			}
 			break;
 		case '-':
 			/*Handle behavior for '-' flag in different states if needed*/
