@@ -85,7 +85,7 @@ void PrintfSpecifierParser(int *countPtr, uint16_t i, const char *format,
 			break;
 		default:
 			*countPtr += Putchar('%');
-			/* *countPtr += Putchar(format[i]); */
+			*countPtr += Putchar(format[i]);
 			break;
 	}
 }
