@@ -161,22 +161,6 @@ uint8_t PrintfNum(uint64_t arg, uint8_t length,
 	{
 		case LEN_SHORT_SHORT:
 		case LEN_SHORT:
-		if (sign)
-			{
-				int n = arg;
-
-				if (n < 0)
-				{
-					n = -n;
-					numSign = -1;
-				}
-				number = (short)n;
-			}
-			else
-			{
-				number = (unsigned short)arg;
-			}
-			break;
 		case LEN_DEFAULT:
 			if (sign)
 			{
