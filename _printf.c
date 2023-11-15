@@ -126,7 +126,7 @@ uint8_t PrintfNum(uint64_t arg, uint8_t length,
 						n = -n;
 						numSign = -1;
 					}
-					number = (short)n;
+					number = (unsigned short)n;
 				}
 				else
 				{
@@ -162,7 +162,7 @@ uint8_t PrintfNum(uint64_t arg, uint8_t length,
 					n = -n;
 					numSign = -1;
 				}
-				number = (int64_t)n;
+				number = (uint64_t)n;
 			}
 			else
 			{

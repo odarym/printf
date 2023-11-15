@@ -29,5 +29,7 @@ void PrintfSpecifierParser(int *countPtr, uint16_t i, const char *specifier,
 	PrintfLengthState length, bool hexUpper);
 
 
+#define ISNEGATIVE(x) ((x < 0) ? 1 : 0)
+
 #endif
 
