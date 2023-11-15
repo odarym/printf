@@ -73,7 +73,10 @@ PRINTF_STATE_SPEC_:
 						count += Puts(va_arg(args, char*));
 						break;
 					case 'r':
-						count += PutsReverse(va_arg(args, char*));
+						count += PutsReverse(va_arg(args, char *));
+						break;
+					case 'R':
+						count += PutsRot13(va_arg(args, char *));
 						break;
 					case 'S':
 						count += PutsCustom(va_arg(args, char *));
