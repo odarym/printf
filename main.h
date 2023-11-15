@@ -7,8 +7,6 @@
  * Desc: Header file containing declartions for functions
  * and all standard library headers that will be used in the project
 */
-/* Macro that checks if varidic argument list is empty */
-/*#define IsEmpty(...) ( sizeof( (char[]){#__VA_ARGS__} ) == 1 )*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,7 +26,6 @@ int DecimalToBinary(uint64_t decimalNum);
 int PutsCustom(char *string);
 int PrintfFlags(char flag, va_list arguments);
 int PutsReverse(char *string);
-
 
 
 #endif
