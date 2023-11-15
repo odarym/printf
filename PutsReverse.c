@@ -15,9 +15,10 @@ int PutsReverse(char *string)
 	count = stringLength;
 	if (stringLength > 0)
 	{
-		do {
+		while (stringLength)
+		{
 			Putchar(string[--stringLength]);
-		} while (stringLength > 0);
+		}
 	}
 
 	return (count);

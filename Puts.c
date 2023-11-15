@@ -10,7 +10,9 @@
 int Puts(char *string)
 {
 	if (!string)
-		return (0);
+	{
+		return (write(1, "(null)", 6));
+	}
 
 	return (write(1, string, strlen(string)));
 }
