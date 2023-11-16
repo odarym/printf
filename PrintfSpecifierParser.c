@@ -48,7 +48,7 @@ void PrintfSpecifierParser(int *countPtr, uint16_t i, const char *format,
 		case 'd':
 		case 'i':
 			base = 10, sign = true;
-			*countPtr += PrintfNum(va_arg(arguments, int32_t),
+			*countPtr += PrintfNum(va_arg(arguments, uint64_t),
 									length, sign, base, hexUpper);
 			break;
 		case 'u':
