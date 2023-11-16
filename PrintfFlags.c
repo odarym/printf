@@ -17,7 +17,6 @@ int PrintfFlags(char flag, va_list arguments)
 	{
 		case '+':
         /*Handle behavior for '+' flag in diffrent states*/
-			if ()
 			Putchar(flag);
 			if (specifier == 'd' || specifier == 'i')
 			{
@@ -37,20 +36,21 @@ int PrintfFlags(char flag, va_list arguments)
 			break;
 		case '#':
 			Putchar(flag);
-			if (specifier == 'x' || specifier == 'X' || specifier == 'o');
+			if (specifier == 'x' || specifier == 'X' || specifier == 'o')
 			{
 				/* Handle '#' for hex and octal*/
 				count += 2;
 				/* Assuming a 0x or 0 prefix is added*/
 			}
+			break;
 		case '0':
 			if (specifier == 'a' || specifier == 'A' || specifier == 'e' || specifier == 'E' ||
 				specifier == 'f' || specifier == 'F' || specifier == 'g' || specifier == 'G')
-						{
-						/* Handle '#' for floating-point formats*/
-						Putchar('0');
-						count++;
-						}
+			{
+				/* Handle '#' for floating-point formats*/
+				Putchar('0');
+				count++;
+			}
 			break;
 	}
 	return (count);
