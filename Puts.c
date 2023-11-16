@@ -45,7 +45,7 @@ int PutsCustom(char *string)
 			count += Puts("\\x");
 			DecToHex(buffer, string[i]);
 			/*Single digit hex number*/
-			if ((string[i] < 17))
+			if ((string[i] < 16))
 			{
 				count += Putchar('0');
 				count += Putchar(buffer[0]);
