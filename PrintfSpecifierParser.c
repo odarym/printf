@@ -86,7 +86,7 @@ void PrintfSpecifierParser(int *countPtr, uint16_t i, const char *format,
 		default:
 			if (length != LEN_DEFAULT)
 			{
-				*countPtr += Putchar(format[0]);
+				*countPtr += Putchar(format[i - 2]);
 				*countPtr += Putchar(format[i]);
 				break;
 			}
