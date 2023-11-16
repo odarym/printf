@@ -17,6 +17,7 @@ int PrintfFlags(char flag, va_list arguments)
 	{
 		case '+':
         /*Handle behavior for '+' flag in diffrent states*/
+			if ()
 			Putchar(flag);
 			Putchar(specifier);
 			break;
