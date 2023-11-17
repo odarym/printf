@@ -12,8 +12,8 @@ int _printf(const char *format, ...)
 {
 	PrintfStateHolderStruct_t *printfStatePtr = malloc (sizeof(PrintfStateHolderStruct_t));
 	int i = 0, j = 0, count = 0;
-	
-	if (!printfStatePtr)
+
+	if (!printfStatePtr) /*malloc failed*/
 		return (-1);
 
 
@@ -21,7 +21,11 @@ int _printf(const char *format, ...)
 	printfStatePtr->radix = 10;
 	printfStatePtr->hexUpper = false,
 	printfStatePtr->sign = false, printfStatePtr->printSignAlways = false,
-	printfStatePtr->indexPtr = &i, printfStatePtr->width = 0;
+	printfStatePtr->indexPtr = &i;
+	printfStatePtr->width = 0;
+	printfStatePtr->widthBuf[31] = '\0';
+	printfStatePtr->precision = 0;
+	printfStatePtr->precisionBuf[31] = '\0';
 	printfStatePtr->formatString = format;
 	printfStatePtr->count = &count;
 	printfStatePtr->flags = FLAG_NONE;
@@ -51,8 +55,7 @@ int _printf(const char *format, ...)
 					case '+':
 						printfStatePtr->printSignAlways = true;
 						printfStatePtr->flags = FLAG_PLUS;
-						i++;
-						goto PRINTF_STATE_SPEC_;
+						break;
 					case '-':
 						printfStatePtr->flags = FLAG_MINUS;
 						goto PRINTF_STATE_SPEC_;
@@ -148,6 +151,7 @@ PRINTF_STATE_SPEC_:
 				printfStatePtr->hexUpper = false;
 				printfStatePtr->printSignAlways = false;
 				printfStatePtr->width = 0;
+				printfStatePtr->precision = 0;
 				printfStatePtr->radix = 10;
 				printfStatePtr->flags = FLAG_NONE;
 				break;
@@ -262,7 +266,9 @@ uint8_t PrintfNum(PrintfStateHolderStruct_t *currentStatePtr)
 	if (currentStatePtr->sign && numSign < 0 && !currentStatePtr->printSignAlways)
 		buffer[i++] = '-';
 	else if (currentStatePtr->printSignAlways)
-		count += Putchar('+');		
+		count += Putchar('+');
+	else if ((currentStatePtr->flags == FLAG_SPACE))
+		count += Putchar(' ');
 
 	while (--i > -1)
 		count += Putchar(buffer[i]);

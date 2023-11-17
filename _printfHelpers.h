@@ -16,8 +16,15 @@ struct PrintfStateHolderStruct
 	PrintfState state;
 	PrintfLengthState length;
 	PrintfFlagsState flags;
-	/* PrintfFlagsState flags; */
+
 	int *count;
+	int *indexPtr;
+
+	int width;
+	char widthBuf[32];
+
+	int precision;
+	char precisionBuf[32];
 
 	uint64_t nextArgument;
 	int8_t numSign;
@@ -30,10 +37,6 @@ struct PrintfStateHolderStruct
 	const char *formatString;
 
 	HexChars_t numChars;
-
-	int *indexPtr;
-	int width;
-	char widthBuf[32];
 };
 typedef struct PrintfStateHolderStruct PrintfStateHolderStruct_t;
 
