@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * ConvertBase - Convert a decimal value to hex
+ * DecToHex - Convert a decimal value to hex
  *
  * @number: The base 10 number to convert
  * @outBuffer: The buffer that stores the result

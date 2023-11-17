@@ -11,12 +11,15 @@
 int _printf(const char *format, ...)
 {
 	PrintfStateHolderStruct_t *printfStatePtr = malloc (sizeof(PrintfStateHolderStruct_t));
-
 	int i = 0, j = 0, count = 0;
+	
+	if (!printfStatePtr)
+		return (-1);
+
 
 	printfStatePtr->state = NORMAL, printfStatePtr->length = LEN_DEFAULT;
 	printfStatePtr->radix = 10;
-	printfStatePtr->hexUpper = false, 
+	printfStatePtr->hexUpper = false,
 	printfStatePtr->sign = false, printfStatePtr->printSignAlways = false,
 	printfStatePtr->indexPtr = &i, printfStatePtr->width = 0;
 	printfStatePtr->formatString = format;
@@ -47,21 +50,24 @@ int _printf(const char *format, ...)
 				{
 					case '+':
 						printfStatePtr->printSignAlways = true;
+						printfStatePtr->flags = FLAG_PLUS;
 						i++;
 						goto PRINTF_STATE_SPEC_;
 					case '-':
+						printfStatePtr->flags = FLAG_MINUS;
 						goto PRINTF_STATE_SPEC_;
 					case ' ':
+						printfStatePtr->flags = FLAG_SPACE;
 						i++;
 						goto PRINTF_STATE_SPEC_;
 					case '#':
+						printfStatePtr->flags = FLAG_HASH;
 						goto PRINTF_STATE_SPEC_;
 					case '0':
+						printfStatePtr->flags = FLAG_ZERO;
 						goto PRINTF_STATE_SPEC_;
-						break;
 				default:
 					goto PRINTF_STATE_WIDTH_;
-					break;
 				}
 				break;
 			case WIDTH:
@@ -91,7 +97,6 @@ PRINTF_STATE_WIDTH_:
 						break;
 				default:
 					goto PRINTF_STATE_PRECISION_;
-					break;
 				}
 				break;
 			case PRECISION:
@@ -103,7 +108,6 @@ PRINTF_STATE_PRECISION_:
 						break;
 					default:
 						goto PRINTF_STATE_LEN_;
-						break;
 				}
 				break;
 			case LENGTH:
@@ -145,6 +149,7 @@ PRINTF_STATE_SPEC_:
 				printfStatePtr->printSignAlways = false;
 				printfStatePtr->width = 0;
 				printfStatePtr->radix = 10;
+				printfStatePtr->flags = FLAG_NONE;
 				break;
 		}
 	}

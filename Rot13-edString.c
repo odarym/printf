@@ -14,28 +14,29 @@ int PutsRot13(char *string)
 	int stringLength = strlen(string);
 	int count = 0;
 	char c = 0;
-	count = stringLength;	
+
+	count = stringLength;
 
 	if (!string)
 		return (0);
 
 	for (; string[i] != '\0'; i++)
 	{
-    	c = string[i];
+		c = string[i];
 
-    	if (c >= 'a' && c <= 'z')
+		if (c >= 'a' && c <= 'z')
 		{
-    		Putchar((c - 'a' + 13) % 26 + 'a');
-    	} 
+			Putchar((c - 'a' + 13) % 26 + 'a');
+		}
 		else if (c >= 'A' && c <= 'Z')
 		{
-    		Putchar((c - 'A' + 13) % 26 + 'A');
-    	}
+			Putchar((c - 'A' + 13) % 26 + 'A');
+		}
 		else
 		{
-    		Putchar(c);
+			Putchar(c);
 		}
-    }
+	}
 
 	return (count);
 }

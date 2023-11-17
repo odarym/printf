@@ -6,8 +6,8 @@
 
 struct HexChars
 {
-	const char* hexCharsLower;
-	const char* hexCharsUpper;
+	const char *hexCharsLower;
+	const char *hexCharsUpper;
 };
 typedef struct HexChars HexChars_t;
 
@@ -27,7 +27,7 @@ struct PrintfStateHolderStruct
 	bool printSignAlways;
 
 	va_list args;
-	const char* formatString;
+	const char *formatString;
 
 	HexChars_t numChars;
 
@@ -36,17 +36,10 @@ struct PrintfStateHolderStruct
 	char widthBuf[32];
 };
 typedef struct PrintfStateHolderStruct PrintfStateHolderStruct_t;
-/* 
-uint8_t PrintfNum(uint64_t arg, uint8_t length,
-					bool sign, uint8_t base, bool hexUpper, bool printSignAlways);
-
-void PrintfSpecifierParser(int *countPtr, uint16_t i, const char *specifier,
-	va_list arguments, uint8_t base, bool sign,
-	PrintfLengthState length, bool hexUpper, bool printSignAlways);
- */
 
 uint8_t PrintfNum(PrintfStateHolderStruct_t *currentStatePtr);
 void PrintfSpecifierParser(PrintfStateHolderStruct_t *statePtr);
+int PrintfFlags(char flag, va_list arguments);
 /* int PrintfFlags(PrintfFlagsState flag, va_list arguments); */
 
 
