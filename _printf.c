@@ -10,25 +10,19 @@
 */
 int _printf(const char *format, ...)
 {
-	PrintfStateHolderStruct_t *printfStatePtr = malloc (sizeof(PrintfStateHolderStruct_t));
-	int i = 0, j = 0, count = 0;
+	PrintfStateHolderStruct_t *printfStatePtr = malloc(sizeof(PrintfStateHolderStruct_t));
+	int i = 0, count = 0;
 
-	if (!printfStatePtr) /*malloc failed*/
+	if ((!printfStatePtr) || (!format)) /*NULL format string or malloc return*/
 		return (-1);
-
-
 	ResetPrintfState(printfStatePtr);
-	printfStatePtr->widthBuf[31] = '\0';
-	printfStatePtr->precisionBuf[31] = '\0';
-	printfStatePtr->flags = FLAG_NONE;
+	printfStatePtr->widthBuf[18] = '\0';
+	printfStatePtr->precisionBuf[18] = '\0';
 	printfStatePtr->formatString = format;
 	printfStatePtr->indexPtr = &i;
 	printfStatePtr->count = &count;
+
 	va_copy(printfStatePtr->argsCopy, printfStatePtr->args);
-
-	if (!format) /*Check the validity of the format string*/
-		return (-1);
-
 	va_start(printfStatePtr->args, format);
 	for (; format[i]; i++)
 	{
@@ -46,77 +40,23 @@ int _printf(const char *format, ...)
 				}
 				break;
 			case FLAG:
-				switch (format[i])
-				{
-					case '+':
-						printfStatePtr->printSignAlways = true;
-						printfStatePtr->flags = FLAG_PLUS;
-						break;
-					case '-':
-						printfStatePtr->flags = FLAG_MINUS;
-						goto PRINTF_STATE_SPEC_;
-					case ' ':
-						printfStatePtr->flags = FLAG_SPACE;
-						break;
-					case '#':
-						if ((format[i + 1] == 'o') && (va_arg(printfStatePtr->argsCopy, uint64_t)))
-							count += Putchar('0');
-						if ((format[i + 1] == 'x') && (va_arg(printfStatePtr->argsCopy, uint64_t)))
-							count += Puts("0x");
-						if ((format[i + 1] == 'X') && (va_arg(printfStatePtr->argsCopy, uint64_t)))
-							count += Puts("0X");
-						printfStatePtr->flags = FLAG_HASH;
-						break;
-					case '0':
-						printfStatePtr->flags = FLAG_ZERO;
-						goto PRINTF_STATE_SPEC_;
-				default:
-					goto PRINTF_STATE_WIDTH_;
-				}
+				PrintfFlags(printfStatePtr);
 				break;
 			case WIDTH:
-PRINTF_STATE_WIDTH_:
-				switch (format[i])
-				{
-					case '0':
-					case '1':
-					case '2':
-					case '3':
-					case '4':
-					case '5':
-					case '6':
-					case '7':
-					case '8':
-					case '9':
-						j = 0;
-						while ((format[i] >= '0') && (format[i] <= '9'))
-						{
-							printfStatePtr->widthBuf[j++] = format[i++];
-						}
-						printfStatePtr->widthBuf[j] = '\0';
-						printfStatePtr->width = atoi(printfStatePtr->widthBuf);
-						goto PRINTF_STATE_SPEC_;
-						break;
-					case '*':
-						printfStatePtr->width = va_arg(printfStatePtr->args, int);
-						break;
-				default:
-					goto PRINTF_STATE_PRECISION_;
-				}
+				PrintfWidth(printfStatePtr);
 				break;
 			case PRECISION:
-PRINTF_STATE_PRECISION_:
 				switch (format[i])
 				{
 					case '*':
-						printfStatePtr->width = va_arg(printfStatePtr->args, int);
+						printfStatePtr->precision = va_arg(printfStatePtr->args, int);
 						break;
 					default:
-						goto PRINTF_STATE_LEN_;
+						i--;
+						printfStatePtr->state = LENGTH;
 				}
 				break;
 			case LENGTH:
-PRINTF_STATE_LEN_:
 				switch (format[i])
 				{
 					case 'h':
@@ -128,7 +68,8 @@ PRINTF_STATE_LEN_:
 						printfStatePtr->length =  LEN_LONG;
 						break;
 					default:
-						goto PRINTF_STATE_SPEC_;
+						i--;
+						printfStatePtr->state = SPEC;
 				}
 				break;
 			case SHORT:
@@ -148,7 +89,6 @@ PRINTF_STATE_SPEC_:
 				PrintfSpecifierParser(printfStatePtr);
 				/*Reset state to NORMAL*/
 				ResetPrintfState(printfStatePtr);
-				
 				break;
 		}
 	}

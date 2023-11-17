@@ -1,57 +1,53 @@
-#include "main.h"
+#include "PrintfHelpers.h"
+
 
 /**
  * PrintfFlags - Handle flag specifiers
  *
- * @flag: The flag passed
- * @arguments: Variable argument list
+ * thisState - current printf state
  *
- * Return: Print count
+ * Return: 0
  */
-int PrintfFlags(char flag, va_list arguments)
+int PrintfFlags(PrintfStateHolderStruct_t *thisState)
 {
-	char specifier = va_arg(arguments, int);
-	int count = 0;
-
-	switch (flag)
+	switch (thisState->formatString[(*(thisState->indexPtr))])
 	{
 		case '+':
-        /*Handle behavior for '+' flag in diffrent states*/
-			Putchar(flag);
-			if (specifier == 'd' || specifier == 'i')
-			{
-				int number = va_arg(arguments, int);
-				if (number >= 0)
-				{
-					Putchar('+');
-					count++;
-				}
-			}
+			thisState->printSignAlways = true;
+			thisState->flags = FLAG_PLUS;
 			break;
 		case '-':
-			/*Handle behavior for '-' flag in different states if needed*/
+			thisState->flags = FLAG_MINUS;
+			/*Don't consume character instead switch to specifier state*/
+			/*Basically i-- inside printf*/
+			(*(thisState->indexPtr) = (*(thisState->indexPtr)) - 1);
+			thisState->state = SPEC;
 			break;
 		case ' ':
-		Putchar(flag);
+			thisState->flags = FLAG_SPACE;
 			break;
 		case '#':
-			Putchar(flag);
-			if (specifier == 'x' || specifier == 'X' || specifier == 'o')
-			{
-				/* Handle '#' for hex and octal*/
-				count += 2;
-				/* Assuming a 0x or 0 prefix is added*/
-			}
+			if ((thisState->formatString[(*(thisState->indexPtr)) + 1] == 'o')
+					&& (va_arg(thisState->argsCopy, uint64_t)))
+				*(thisState->count) += Putchar('0');
+			if ((thisState->formatString[(*(thisState->indexPtr)) + 1] == 'x')
+					&& (va_arg(thisState->argsCopy, uint64_t)))
+				*(thisState->count) += Puts("0x");
+			if ((thisState->formatString[(*(thisState->indexPtr)) + 1] == 'X')
+					&& (va_arg(thisState->argsCopy, uint64_t)))
+				thisState->count += Puts("0X");
+			thisState->flags = FLAG_HASH;
 			break;
 		case '0':
-			if (specifier == 'a' || specifier == 'A' || specifier == 'e' || specifier == 'E' ||
-				specifier == 'f' || specifier == 'F' || specifier == 'g' || specifier == 'G')
-			{
-				/* Handle '#' for floating-point formats*/
-				Putchar('0');
-				count++;
-			}
+			thisState->flags = FLAG_ZERO;
+
+			(*(thisState->indexPtr) = (*(thisState->indexPtr)) - 1);
+			thisState->state = WIDTH;
 			break;
+	default:
+		(*(thisState->indexPtr) = (*(thisState->indexPtr)) - 1);
+		thisState->state = WIDTH;
+		break;
 	}
-	return (count);
+	return (0);
 }

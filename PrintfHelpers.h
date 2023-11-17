@@ -12,29 +12,31 @@ typedef struct __attribute__ ((__packed__)) HexChars
 
 typedef struct PrintfStateHolderStruct
 {
+	/*Enums with different state values for printf*/
 	PrintfState state;
 	PrintfLengthState length;
 	PrintfFlagsState flags;
 	Radices radix;
 
+	/*Total number of characters printd so far*/
 	int *count;
+	/*The loop index for format*/
 	int *indexPtr;
 
-	int width;
-	char widthBuf[32];
-
-	int precision;
-	char precisionBuf[32];
+	signed long width;
+	char widthBuf[19];
+	signed long precision;
+	char precisionBuf[19];
 
 	uint64_t nextArgument;
 	int8_t numSign;
 	bool hexUpper;
 	bool sign;
 	bool printSignAlways;
-
+	/*A list of the variadic arguments and a copy where needed*/
 	va_list args;
 	va_list argsCopy;
-	
+	/*The format string in _printf*/
 	const char *formatString;
 
 	HexChars_t numChars;
@@ -44,8 +46,9 @@ typedef struct PrintfStateHolderStruct
 
 uint8_t PrintfNum(PrintfStateHolderStruct_t *currentStatePtr);
 void PrintfSpecifierParser(PrintfStateHolderStruct_t *statePtr);
-int PrintfFlags(char flag, va_list arguments);
 void ResetPrintfState(PrintfStateHolderStruct_t *printfState);
+int PrintfFlags(PrintfStateHolderStruct_t *);
+void PrintfWidth(PrintfStateHolderStruct_t *);
 /* int PrintfFlags(PrintfFlagsState flag, va_list arguments); */
 
 

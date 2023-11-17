@@ -3,7 +3,6 @@
 
 #include "main.h"
 
-
 /**
  * enum PrintfState - Contains the different states that
  * _printf can be in
@@ -17,7 +16,7 @@ typedef enum __attribute__ ((__packed__))
  * enum PrintfLengthState - Contains the different length states that
  * _printf can be in
 */
-typedef enum
+typedef enum __attribute__ ((__packed__))
 {
 	LEN_DEFAULT = 10, LEN_SHORT_SHORT, LEN_SHORT, LEN_LONG, LEN_LONG_LONG
 } PrintfLengthState;

@@ -23,19 +23,19 @@ uint8_t PrintfNum(PrintfStateHolderStruct_t *currentStatePtr)
 	{
 		case LEN_SHORT_SHORT:
 			if (currentStatePtr->sign)
-				{
-					int n = arg;
+			{
+				int n = arg;
 
-					if (n < 0)
-					{
-						currentStatePtr->printSignAlways = false;
-						n = -n, numSign = -1;
-					}
-					number = (unsigned short)n;
+				if (n < 0)
+				{
+					currentStatePtr->printSignAlways = false;
+					n = -n, numSign = -1;
 				}
-				else
-					number = (unsigned short)arg;
-				break;
+				number = (unsigned short)n;
+			}
+			else
+				number = (unsigned short)arg;
+			break;
 		case LEN_SHORT:
 		case LEN_DEFAULT:
 			if (currentStatePtr->sign)
@@ -85,12 +85,15 @@ uint8_t PrintfNum(PrintfStateHolderStruct_t *currentStatePtr)
 	} while (number > 0);
 
 	currentStatePtr->width -= i;
-	if (currentStatePtr->width > 0)
+	if ((currentStatePtr->width > 0) && (currentStatePtr->flags == FLAG_NONE))
 	{
 		while (currentStatePtr->width--)
-		{
 			Putchar(' ');
-		}
+	}
+	else if ((currentStatePtr->flags == FLAG_ZERO) && (currentStatePtr->width > 0))
+	{
+		while (currentStatePtr->width--)
+			Putchar('0');
 	}
 
 	/*Place sign*/
@@ -98,7 +101,7 @@ uint8_t PrintfNum(PrintfStateHolderStruct_t *currentStatePtr)
 		buffer[i++] = '-';
 	else if (currentStatePtr->printSignAlways)
 		count += Putchar('+');
-	else if ((currentStatePtr->flags == FLAG_SPACE))
+	else if (currentStatePtr->flags == FLAG_SPACE)
 		count += Putchar(' ');
 
 	while (--i > -1)
