@@ -15,20 +15,13 @@ int _printf(const char *format, ...)
 
 	if (!printfStatePtr) /*malloc failed*/
 		return (-1);
+	
+	va_copy(printfStatePtr->argsCopy, printfStatePtr->args);
 
-
-	printfStatePtr->state = NORMAL, printfStatePtr->length = LEN_DEFAULT;
-	printfStatePtr->radix = 10;
-	printfStatePtr->hexUpper = false,
-	printfStatePtr->sign = false, printfStatePtr->printSignAlways = false,
+	ResetPrintfState(printfStatePtr);
 	printfStatePtr->indexPtr = &i;
-	printfStatePtr->width = 0;
-	printfStatePtr->widthBuf[31] = '\0';
-	printfStatePtr->precision = 0;
-	printfStatePtr->precisionBuf[31] = '\0';
 	printfStatePtr->formatString = format;
 	printfStatePtr->count = &count;
-	printfStatePtr->flags = FLAG_NONE;
 
 	if (!format) /*Check the validity of the format string*/
 		return (-1);
@@ -64,11 +57,11 @@ int _printf(const char *format, ...)
 						break;
 						goto PRINTF_STATE_SPEC_;
 					case '#':
-						if ((format[i + 1] == 'o'))
+						if ((format[i + 1] == 'o')&& (va_arg(printfStatePtr->argsCopy, uint64_t)))
 							count += Putchar('0');
-						if ((format[i + 1] == 'x'))
+						if ((format[i + 1] == 'x') && (va_arg(printfStatePtr->argsCopy, uint64_t)))
 							count += Puts("0x");
-						if ((format[i + 1] == 'X'))
+						if ((format[i + 1] == 'X') &&(va_arg(printfStatePtr->argsCopy, uint64_t)))
 							count += Puts("0X");
 						printfStatePtr->flags = FLAG_HASH;
 						break;
@@ -152,21 +145,12 @@ PRINTF_STATE_LEN_:
 PRINTF_STATE_SPEC_:
 				PrintfSpecifierParser(printfStatePtr);
 				/*Reset state to NORMAL*/
-				printfStatePtr->state = NORMAL;
-				printfStatePtr->length = LEN_DEFAULT;
-				printfStatePtr->sign = false;
-				printfStatePtr->hexUpper = false;
-				printfStatePtr->printSignAlways = false;
-				printfStatePtr->width = 0;
-				printfStatePtr->precision = 0;
-				printfStatePtr->radix = 10;
-				printfStatePtr->flags = FLAG_NONE;
-				break;
+				ResetPrintfState(printfStatePtr);
 		}
 	}
 	va_end(printfStatePtr->args);
 
-	if ((format[i - 1] == '%') && (format[i - 3]))
+	if (((format[i - 1] == '%') || ((format[i - 1] == ' '))) && !(format[i - 3]))
 		count = -1;
 
 	free(printfStatePtr);
@@ -174,115 +158,22 @@ PRINTF_STATE_SPEC_:
 }
 
 /**
- * PrintfNum - Assist printf in formatting numbers before printing
- *
- * @arg: The number to format
- * @length: The state to format to
- * @sign: The number sign
- * @base: The number base
- * @hexUpper: The case of hex chars
- *
- * Return: the number of characters in the value
+ * ResetPrintfState - Resets printf state to normal
+ * 
+ * @statePtr -> a pointer to the structure holding printf's state
 */
-uint8_t PrintfNum(PrintfStateHolderStruct_t *currentStatePtr)
+void ResetPrintfState(PrintfStateHolderStruct_t *statePtr)
 {
-	char buffer[32] = { 0 };
-	uint64_t number = 0;
-	int8_t numSign = 1, i = 0, j = 0;
-	uint8_t count = 0;
-	char hexChars[] = {"0123456789abcdef"};
-
-	uint64_t arg = va_arg(currentStatePtr->args, uint64_t);
-
-	/*Process length*/
-	switch (currentStatePtr->length)
-	{
-		case LEN_SHORT_SHORT:
-			if (currentStatePtr->sign)
-				{
-					int n = arg;
-
-					if (n < 0)
-					{
-						currentStatePtr->printSignAlways = false;
-						n = -n, numSign = -1;
-					}
-					number = (unsigned short)n;
-				}
-				else
-					number = (unsigned short)arg;
-				break;
-		case LEN_SHORT:
-		case LEN_DEFAULT:
-			if (currentStatePtr->sign)
-			{
-				int n = arg;
-
-				if (n < 0)
-				{
-					currentStatePtr->printSignAlways = false;
-					n = -n, numSign = -1;
-				}
-				number = (unsigned int)n;
-			}
-			else
-				number = (unsigned int)arg;
-			break;
-		case LEN_LONG:
-		case LEN_LONG_LONG:
-			if (currentStatePtr->sign)
-			{
-				int64_t n = arg;
-
-				if (n < 0)
-				{
-					currentStatePtr->printSignAlways = false;
-					n = -n, numSign = -1;
-				}
-				number = (uint64_t)n;
-			}
-			else
-			{
-				number = (uint64_t)arg;
-			}
-			break;
-	}
-	/*Convert number to ascii */
-	/*Convert hexChars to uppercase if X format is used*/
-	if (currentStatePtr->hexUpper)
-		for (j = 10; j < 16; j++)
-			hexChars[j] -= ' ';
-
-	do {
-		uint32_t rem = number % currentStatePtr->radix;
-
-		number /= currentStatePtr->radix;
-		buffer[i++] = hexChars[rem];
-	} while (number > 0);
-
-	currentStatePtr->width -= i;
-	if (currentStatePtr->width > 0)
-	{
-		while (currentStatePtr->width--)
-		{
-			Putchar(' ');
-		}
-	}
-
-	/*Place sign*/
-	if (currentStatePtr->sign && numSign < 0 && !currentStatePtr->printSignAlways)
-		buffer[i++] = '-';
-	else if (currentStatePtr->printSignAlways)
-		count += Putchar('+');
-	else if ((currentStatePtr->flags == FLAG_SPACE))
-		count += Putchar(' ');
-
-	while (--i > -1)
-		count += Putchar(buffer[i]);
-
-	return (count);
+	statePtr->state = NORMAL;
+	statePtr->length = LEN_DEFAULT;
+	statePtr->radix = 10;
+	statePtr->hexUpper = false;
+	statePtr->sign = false;
+	statePtr->printSignAlways = false;
+	statePtr->width = 0;
+	statePtr->widthBuf[9] = '\0';
+	statePtr->precision = 0;
+	statePtr->precisionBuf[9] = '\0';
+	statePtr->flags = FLAG_NONE;
 }
-
-
-
 

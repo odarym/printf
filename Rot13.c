@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * PutsRot13 - Print string in rot13 form
+ * PutsRot13 - Print string in rot13 format
  *
  * @string: The string being printed in rot13
  *

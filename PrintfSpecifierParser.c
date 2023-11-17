@@ -18,9 +18,6 @@
 */
 void PrintfSpecifierParser(PrintfStateHolderStruct_t *statePtr)
 {
-	va_list args2;
-	va_copy(args2, statePtr->args);
-
 	switch (statePtr->formatString[*(statePtr->indexPtr)])
 	{
 		case 'c':
@@ -62,7 +59,7 @@ void PrintfSpecifierParser(PrintfStateHolderStruct_t *statePtr)
 			*statePtr->count += PrintfNum(statePtr);
 			break;
 		case 'p':
-			statePtr->nextArgument = va_arg(args2, uint64_t);
+			statePtr->nextArgument = va_arg(statePtr->argsCopy, uint64_t);
 			if (!statePtr->nextArgument)
 			{
 				*statePtr->count += Puts("(nil)");
