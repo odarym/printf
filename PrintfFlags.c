@@ -17,7 +17,7 @@ int PrintfFlags(PrintfStateHolderStruct_t *thisState)
 			thisState->flags = FLAG_PLUS;
 			break;
 		case '-':
-			thisSta te->flags = FLAG_MINUS;
+			thisState->flags = FLAG_MINUS;
 			/*Don't consume character instead switch to specifier state*/
 			/*Basically i-- inside printf*/
 			(*(thisState->indexPtr) = (*(thisState->indexPtr)) - 1);
