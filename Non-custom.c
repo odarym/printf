@@ -4,7 +4,7 @@
  * Main - function to demonstrate printf with precision.
  * Return: 0 on successful execution.
  */
-int main(void) 
+int nonCustom(int intValue, int  floatValue, int stringValue) 
 {
     int intValue = 12345;
     float floatValue = 123.456789;
