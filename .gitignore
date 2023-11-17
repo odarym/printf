@@ -4,5 +4,6 @@
 *.swp
 .gdb_history
 *main*.c*
+*.txt
 peda*
 *.cxx
