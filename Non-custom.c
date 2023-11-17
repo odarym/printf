@@ -2,7 +2,7 @@
 
 /**
  * @brief Main function to demonstrate printf with precision.
- * @return 0 on successful execution.
+ * Return: 0 on successful execution.
  */
 int main(void) 
 {
