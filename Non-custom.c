@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 /**
- * @brief Main function to demonstrate printf with precision.
+ * Main - function to demonstrate printf with precision.
  * Return: 0 on successful execution.
  */
 int main(void) 
