@@ -21,9 +21,10 @@ struct PrintfStateHolderStruct
 	int *indexPtr;
 
 	int width;
-	char widthBuf[20];
+	char widthBuf[32];
+
 	int precision;
-	char precisionBuf[20];
+	char precisionBuf[32];
 
 	uint64_t nextArgument;
 	int8_t numSign;
@@ -33,8 +34,6 @@ struct PrintfStateHolderStruct
 	bool printSignAlways;
 
 	va_list args;
-	va_list argsCopy;
-
 	const char *formatString;
 
 	HexChars_t numChars;
@@ -44,7 +43,7 @@ typedef struct PrintfStateHolderStruct PrintfStateHolderStruct_t;
 uint8_t PrintfNum(PrintfStateHolderStruct_t *currentStatePtr);
 void PrintfSpecifierParser(PrintfStateHolderStruct_t *statePtr);
 int PrintfFlags(char flag, va_list arguments);
-void ResetPrintfState(PrintfStateHolderStruct_t *statePtr);
+/* int PrintfFlags(PrintfFlagsState flag, va_list arguments); */
 
 
 #endif
