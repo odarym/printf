@@ -61,11 +61,17 @@ int _printf(const char *format, ...)
 						goto PRINTF_STATE_SPEC_;
 					case ' ':
 						printfStatePtr->flags = FLAG_SPACE;
-						i++;
+						break;
 						goto PRINTF_STATE_SPEC_;
 					case '#':
+						if ((format[i + 1] == 'o'))
+							count += Putchar('0');
+						if ((format[i + 1] == 'x'))
+							count += Puts("0x");
+						if ((format[i + 1] == 'X'))
+							count += Puts("0X");
 						printfStatePtr->flags = FLAG_HASH;
-						goto PRINTF_STATE_SPEC_;
+						break;
 					case '0':
 						printfStatePtr->flags = FLAG_ZERO;
 						goto PRINTF_STATE_SPEC_;
@@ -94,6 +100,7 @@ PRINTF_STATE_WIDTH_:
 						}
 						printfStatePtr->widthBuf[j] = '\0';
 						printfStatePtr->width = atoi(printfStatePtr->widthBuf);
+						goto PRINTF_STATE_SPEC_;
 						break;
 					case '*':
 						printfStatePtr->width = va_arg(printfStatePtr->args, int);
