@@ -1,4 +1,4 @@
-#include "_printfHelpers.h"
+#include "PrintfHelpers.h"
 
 /**
  * PrintfSpecifierParser - Parses statePtr->formatString statePtr->args for
@@ -18,8 +18,7 @@
 */
 void PrintfSpecifierParser(PrintfStateHolderStruct_t *statePtr)
 {
-	va_list args2;
-	va_copy(args2, statePtr->args);
+	va_copy(statePtr->argsCopy, statePtr->args);
 
 	switch (statePtr->formatString[*(statePtr->indexPtr)])
 	{
@@ -46,34 +45,34 @@ void PrintfSpecifierParser(PrintfStateHolderStruct_t *statePtr)
 			break;
 		case 'd':
 		case 'i':
-			statePtr->radix = 10, statePtr->sign = true;
+			statePtr->radix = BASE_DECIMAL, statePtr->sign = true;
 			*statePtr->count += PrintfNum(statePtr);
 			break;
 		case 'u':
-			statePtr->radix = 10, statePtr->sign = false;
+			statePtr->radix = BASE_DECIMAL, statePtr->sign = false;
 			*statePtr->count += PrintfNum(statePtr);
 			break;
 		case 'x':
-			statePtr->radix = 16, statePtr->sign = false;
+			statePtr->radix = BASE_HEX, statePtr->sign = false;
 			*statePtr->count += PrintfNum(statePtr);
 			break;
 		case 'X':
-			statePtr->radix = 16, statePtr->sign = false, statePtr->hexUpper = true;
+			statePtr->radix = BASE_HEX, statePtr->sign = false, statePtr->hexUpper = true;
 			*statePtr->count += PrintfNum(statePtr);
 			break;
 		case 'p':
-			statePtr->nextArgument = va_arg(args2, uint64_t);
+			statePtr->nextArgument = va_arg(statePtr->argsCopy, uint64_t);
 			if (!statePtr->nextArgument)
 			{
 				*statePtr->count += Puts("(nil)");
 				break;
 			}
 			*statePtr->count += Puts("0x");
-			statePtr->radix = 16, statePtr->sign = false, statePtr->length = LEN_LONG_LONG;
+			statePtr->radix = BASE_HEX, statePtr->sign = false, statePtr->length = LEN_LONG_LONG;
 			*statePtr->count += PrintfNum(statePtr);
 			break;
 		case 'o':
-			statePtr->radix = 8, statePtr->sign = false;
+			statePtr->radix = BASE_OCTAL, statePtr->sign = false;
 			*statePtr->count += PrintfNum(statePtr);
 			break;
 		default:

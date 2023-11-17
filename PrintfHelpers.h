@@ -1,21 +1,21 @@
-#ifndef _PRINTF_HELPERS_H
-#define _PRINTF_HELPERS_H
+#ifndef PRINTF_HELPERS_H
+#define PRINTF_HELPERS_H
 
 #include "_printf.h"
 
 
-struct HexChars
+typedef struct __attribute__ ((__packed__)) HexChars
 {
 	const char *hexCharsLower;
 	const char *hexCharsUpper;
-};
-typedef struct HexChars HexChars_t;
+} HexChars_t;
 
-struct PrintfStateHolderStruct
+typedef struct PrintfStateHolderStruct
 {
 	PrintfState state;
 	PrintfLengthState length;
 	PrintfFlagsState flags;
+	Radices radix;
 
 	int *count;
 	int *indexPtr;
@@ -28,21 +28,24 @@ struct PrintfStateHolderStruct
 
 	uint64_t nextArgument;
 	int8_t numSign;
-	uint8_t radix;
 	bool hexUpper;
 	bool sign;
 	bool printSignAlways;
 
 	va_list args;
+	va_list argsCopy;
+	
 	const char *formatString;
 
 	HexChars_t numChars;
-};
-typedef struct PrintfStateHolderStruct PrintfStateHolderStruct_t;
+} PrintfStateHolderStruct_t;
+
+
 
 uint8_t PrintfNum(PrintfStateHolderStruct_t *currentStatePtr);
 void PrintfSpecifierParser(PrintfStateHolderStruct_t *statePtr);
 int PrintfFlags(char flag, va_list arguments);
+void ResetPrintfState(PrintfStateHolderStruct_t *printfState);
 /* int PrintfFlags(PrintfFlagsState flag, va_list arguments); */
 
 

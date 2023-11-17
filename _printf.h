@@ -8,7 +8,7 @@
  * enum PrintfState - Contains the different states that
  * _printf can be in
 */
-typedef enum
+typedef enum __attribute__ ((__packed__))
 {
 	NORMAL = 0, FLAG, WIDTH, PRECISION, LENGTH, SHORT, LONG, SPEC
 } PrintfState;
@@ -26,11 +26,16 @@ typedef enum
  * enum PrintfFlagsState - Contains the different length states that
  * _printf can be in
 */
-typedef enum
+typedef enum __attribute__ ((__packed__))
 {
 	FLAG_NONE = 20, FLAG_PLUS = '+', FLAG_MINUS = '-',
 	FLAG_SPACE = ' ', FLAG_HASH = '#', FLAG_ZERO = '0'
 } PrintfFlagsState;
+
+typedef enum __attribute__ ((__packed__))
+{
+	BASE_BINARY = 2, BASE_OCTAL = 8, BASE_DECIMAL = 10, BASE_HEX = 16
+} Radices;
 
 
 #endif
