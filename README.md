@@ -25,7 +25,7 @@ int main()
     ```git
        git clone https://github.com/odarym/printf.git
     ```
-2.	Navigate to the project directory:
+2.	Navigate to the project directory.
 3.	Compile the source code:
     ```make
         make
