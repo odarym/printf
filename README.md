@@ -22,8 +22,10 @@ int main()
 
 ## Installation
 1.	Clone the repository:
+ ```git  
 2.	git clone https://github.com/odarym/printf.git
-3.	Navigate to the project directory:
+```
+4.	Navigate to the project directory:
 5.	Compile the source code:
      make
 
