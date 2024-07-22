@@ -11,7 +11,7 @@ Features
 ## Usage
 To use this custom printf function, include the header file and call the function as you would with the standard printf.
 #include "_printf.h"
-```
+```c
 int main()
 {
     _printf("Hello, %s! You have %d new messages.\n", "User", 5);
