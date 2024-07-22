@@ -23,10 +23,14 @@ int main()
 ## Installation
 1.	Clone the repository:
    
-2.	```git git clone https://github.com/odarym/printf.git```
-3.	Navigate to the project directory:
-4.	Compile the source code:
-   ```make```
+2.	```git
+       git clone https://github.com/odarym/printf.git
+    ```
+4.	Navigate to the project directory:
+5.	Compile the source code:
+   ```make
+        make
+   ```
 
 ## Testing
 The project includes a set of test cases to verify the functionality of the custom printf implementation. Run the tests using:
