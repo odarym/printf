@@ -32,8 +32,7 @@ int main()
     ```
 
 ## Testing
-The project includes a set of test cases to verify the functionality of the custom printf implementation. Run the tests using:
-make test
+The project includes a set of test cases to verify the functionality of the custom printf implementation.
 
 
 ## Contributing
