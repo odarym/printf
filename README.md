@@ -1,5 +1,6 @@
-## Custom implementation of C's Printf function
-# Project Overview
+# Custom implementation of C's Printf function
+
+## Project Overview
 This project is a custom implementation of the C standard library’s printf function. The implementation is designed as a state machine and aims to replicate most of the functionalities provided by the standard printf function.
 Features
 •	State Machine Design: Utilizes a state machine to handle various formatting states.
@@ -8,7 +9,7 @@ Features
 •	Error Handling: Includes basic error handling for unsupported format specifiers and invalid inputs.
 
 
-# Usage
+## Usage
 To use this custom printf function, include the header file and call the function as you would with the standard printf.
 #include "_printf.h"
 ```
@@ -20,7 +21,7 @@ int main()
 ```
 
 
-# Installation
+## Installation
 1.	Clone the repository:
 2.	git clone https://github.com/yourusername/custom_printf.git
 3.	Navigate to the project directory:
@@ -29,10 +30,10 @@ int main()
 6.	make
 
 
-# Testing
+## Testing
 The project includes a set of test cases to verify the functionality of the custom printf implementation. Run the tests using:
 make test
 
 
-# Contributing
+## Contributing
 Contributions are welcome! Please fork the repository and submit a pull request with your changes.
