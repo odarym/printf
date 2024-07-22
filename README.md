@@ -1,4 +1,4 @@
-# Custom implementation of C's Printf function
+<h2> Custom implementation of C's Printf function </h2>
 
 ## Project Overview
 This project is a custom implementation of the C standard library’s printf function. The implementation is designed as a state machine and aims to replicate most of the functionalities provided by the standard printf function.
