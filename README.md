@@ -27,9 +27,9 @@ int main()
     ```
 2.	Navigate to the project directory:
 3.	Compile the source code:
-   ```make
+    ```make
         make
-   ```
+    ```
 
 ## Testing
 The project includes a set of test cases to verify the functionality of the custom printf implementation. Run the tests using:
